@@ -1,0 +1,66 @@
+Darle mas sabor a la base de datos, es posible
+El usuario deberia de tener mas atributos.
+
+Requerimientos funcionales ordenados por prioridad:
+•Compra de boletos con distintas opciones de pago.
+•Inclusión de código QR en boleto de abordaje.
+•Generación de boleto de abordaje.
+•Capacidad de cancelación y cambios en reservas.
+
+•Consulta de información de abordaje.
+•Consulta de información del viaje en tiempo real.
+
+•Consulta de historial de viajes realizado.
+•Registro de cuenta de usuario.
+
+Rutas
+
+Inicio de sesion
+  Modelarlo en la BD, cada usuario podra tener una sesion a la vez
+  Cada sesion tendra una validez de una hora.
+  Atributos por agregar en la tabla Usuario:
+  -tokenSesion
+  -expiracionSesion
+  
+Compra
+  Buscar viajes
+    Parametros
+      Origen - String
+      Destino - String
+      Dia - Date
+    Retorno
+      Una lista de los viajes que pasan en Dia por Origen y
+      tienen una parada en Destino
+    Sentencia SQL
+      select * from 
+        (select P1.IDViaje as IDViaje from Parada P1 
+        inner join Parada P2 
+          on P1.IDVIaje = P2.IDViaje and P1.NumParada < P2.NumParada
+        where P1.fechaEstimadaLlegada >= @cadenaFecha and 
+            P1.IDEstacion = @Origen and
+            P2.IDEstacion = @Destino) P
+      inner join Viaje V on P.IDViaje = V.ID
+      inner join Autobus A on V.IDAutobus = A.ID;
+
+  Reservar boleto
+    Parametros
+      Origen - String
+      Destino - String
+      IDViaje - int
+    Objetivo
+      Ingresar un boleto a la tabla boletos que tendra fecha de
+      vencimiento de 15 minutos hacia delante
+
+  Confirmar boleto
+    Parametros
+      Origen - String
+      Destino - String
+      IDViaje - int
+    
+    Retorno
+      Boleto generado
+
+Perfil
+  Buscar viajes proximos
+
+  Buscar historial
