@@ -49,7 +49,9 @@ create table if not exists Usuario(
 ID int primary key,
 nombre varchar(30),
 apellidos varchar(30),
-fechaNacimiento date
+fechaNacimiento date,
+tokenSesion int,
+expiracionSesion datetime
 );
 
 create table if not exists Boleto(

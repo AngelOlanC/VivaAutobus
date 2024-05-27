@@ -14,13 +14,6 @@ Requerimientos funcionales ordenados por prioridad:
 •Registro de cuenta de usuario.
 
 Rutas
-
-Inicio de sesion
-  Modelarlo en la BD, cada usuario podra tener una sesion a la vez
-  Cada sesion tendra una validez de una hora.
-  Atributos por agregar en la tabla Usuario:
-  -tokenSesion
-  -expiracionSesion
   
 Compra
   Buscar viajes

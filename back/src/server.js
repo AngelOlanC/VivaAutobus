@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
 
-const routerCompra = require('./MVC/Routes/Compra')
-const routerSesion = require('./MVC/Routes/Sesion')
-const routerUsuario = require('./MVC/Routes/Usuario')
+const routerBuscar = require('../MVC/Routes/Buscar')
+const routerCompra = require('../MVC/Routes/Compra')
+const routerSesion = require('../MVC/Routes/Sesion')
+const routerUsuario = require('../MVC/Routes/Usuario')
 
-app.get('/', (req, res) => res.json({ msg: 'que rollo pa' }))
+app.use('/buscar', routerBuscar)
 app.use('/compra', routerCompra)
 app.use('/sesion', routerSesion)
 app.use('/usuario', routerUsuario)

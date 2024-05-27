@@ -1,2 +1,0 @@
-GET http://localhost:3000/usuario/viajes/historial
-token: 1
