@@ -1,1 +1,4 @@
-GET http://localhost:3000/buscar/CLN/GDL/210303
+
+GET 'https://api.themoviedb.org/3/search/movie?query=the%20lord%20of%20the%20rings' \
+  Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZjYwMjMxZWM0ZTY0Zjk5OTQxOWUyMWUyMDlmYjU2MiIsInN1YiI6IjY2NTUyOTFkMWM1MjljNjU5MTExMTI5MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Qv-5dHpCCvVHMkUwEbGEL5rUlpBenfZLjhmLpzWbDuw' \
+  accept:application/json
