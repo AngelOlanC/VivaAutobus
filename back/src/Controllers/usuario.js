@@ -18,8 +18,10 @@ const crearUsuario = async (req, res) => {
 
   try {
     const contrasenaHasheada = await bcrypt.hash(contrasena, 10)
-    pool.execute(`INSERT INTO USUARIO(nombreUsuario, contrasenaHasheada, nombres, apellidos)
-     VALUES('${nombreUsuario}', '${contrasenaHasheada}', '${nombres}', '${apellidos}');`)
+    const query =
+      `INSERT INTO USUARIO (nombreUsuario, contrasenaHasheada, nombres, apellidos) VALUES
+          ('${nombreUsuario}', '${contrasenaHasheada}', '${nombres}', '${apellidos}');` 
+    pool.execute(query)
     return res.status(200).send({ succes: 'true', message: 'insertado con exito' })
   } catch (e) {
     return res.status(401).send({ success: 'false', message: 'ocurrio un error' })

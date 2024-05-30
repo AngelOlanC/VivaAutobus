@@ -134,7 +134,7 @@ select hour('20240603060000');
 /*
 																									YYYYMMDDHHMMSS
     Columnas
-			ID	Estado				Ciudad						Estacion							Hora estimada llegada
+		Or	ID	Estado				Ciudad						Estacion							Hora estimada llegada
             
     Viaje con ID = 1
 		1	2 	Baja California 	Mexicali 					Terminal del Norte					20240603060000

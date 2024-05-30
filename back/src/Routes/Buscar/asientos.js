@@ -4,6 +4,6 @@ const { buscarAsientos } = require('./../../Controllers/buscar')
 
 const router = express.Router()
 
-router.get('/:id/:inicio/:fin', buscarAsientos)
+router.get('/:idViaje/:idOrigen/:idDestino', buscarAsientos)
 
 module.exports = router
