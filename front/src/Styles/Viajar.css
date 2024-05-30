@@ -1,13 +1,112 @@
 .Viaje-Div-Central {
+    display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
-.text-center {
-    display: flex;
-    padding: 10 20px;
+.Cuerpo-Viaje {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
 }
 
-.Mnesaje-Campos {
-    padding: 30px;
+.Encabezado-Viaje {
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    color: #000000;
+    font-weight: bold;
+    font-family: Georgia;
+    padding: 20px;
+
+}
+
+.Mensaje-Campos {
+    text-align: center;
+    font-size: 20px;
+    color: #000000;
+    font-weight: 400;
+    font-family: Georgia;
+    padding: 30px
+}
+
+.Form-Viajes {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.Label-Origen-Viaje {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 400;
+    font-family: Georgia;
+    padding: 20px;
+    display: block;
+    text-align: center;
+}
+
+.Label-Destino-Viaje {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 400;
+    font-family: Georgia;
+    padding: 20px;
+    display: block;
+    text-align: center;
+}
+
+.Label-Fecha-Viaje {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 400;
+    font-family: Georgia;
+    padding: 20px;
+    display: block;
+    text-align: center;
+}
+
+.seleccionar-ciudad-origen {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #000000;
+    border-width: 1px;
+}
+
+.seleccionar-ciudad-destino {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #000000;
+    border-width: 1px;
+}
+
+.seleccionar-fecha-viaje {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #000000;
+    border-width: 1px;
+    margin-bottom: 40px;
+}
+
+.Boton-Enviar-Viaje {
+
+    text-align: center;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.Boton-Enviar-Viaje:hover {
+    background-color: #6a3a8f;
+    transition: 0.5s;
 }

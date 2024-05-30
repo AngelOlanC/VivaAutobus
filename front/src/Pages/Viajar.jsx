@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../Styles//Viajar.css";
 
 const URL_Estaciones = "http://localhost:4000/buscar/estaciones";
 
@@ -60,15 +61,15 @@ const Viajar = () => {
   return (
     <div className="Viaje-Div-Central">
       <div className="Viaje-Div-Div-Central">
-        <div className="text-center">
+        <div className="Cuerpo-Viaje">
           <h1 className="Encabezado-Viaje">Bienvenido a la página de Viaje</h1>
           <p className="Mensaje-Campos">Llene los siguientes campos porfavor</p>
 
-          <form className="flex flex-col space-y-2 mx-8 md:mx-96">
-            <label htmlFor="name" className="text-gray-700 font-bold">
+          <form className="Form-Viajes">
+            <label htmlFor="name" className="Label-Origen-Viaje">
               Origen:
             </label>
-            <select
+            <select className="seleccionar-ciudad-origen"
               id="seleccionar-ciudad"
               onChange={(e) => handleOrigenChange(e.target.value)}>
               <option value="">Seleccionar Estacion:</option>
@@ -78,10 +79,10 @@ const Viajar = () => {
                 </option>
               ))}
             </select>
-            <label htmlFor="email" className="text-gray-700 font-bold">
+            <label htmlFor="email" className="Label-Destino-Viaje">
               Destino:
             </label>
-            <select
+            <select className="seleccionar-ciudad-destino"
               id="seleccionar-ciudad"
               onChange={(e) => handleDestinoChange(e.target.value)}>
               <option value="">Seleccionar Estacion:</option>
@@ -91,7 +92,7 @@ const Viajar = () => {
                 </option>
               ))}
             </select>
-            <label htmlFor="startDate" className="text-gray-700 font-bold">
+            <label htmlFor="startDate" className="Label-Fecha-Viaje">
               Fecha:
             </label>
             <input
@@ -100,11 +101,11 @@ const Viajar = () => {
               name="startDate"
               value={startDate}
               onChange={(e) => handleDateChange(e.target.value)}
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="seleccionar-fecha-viaje"
             />
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="Boton-Enviar-Viaje"
               onClick={submitForm}
             >
               Enviar
