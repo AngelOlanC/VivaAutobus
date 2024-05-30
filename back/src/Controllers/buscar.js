@@ -1,7 +1,6 @@
 const pool = require('../Model/dbPool.js')
 
 const buscarAsientos = async (_req, _res) => {
-  const { idViaje, }
 }
 
 const buscarViajes = async (req, res) => {
@@ -54,7 +53,7 @@ const buscarEstaciones = async (_req, res) => {
                           EN.ID AS estacion_id, 
                           EN.nombre AS nombre_estacion, 
                           C.nombre AS nombre_ciudad, 
-                          E.nombre AS nombre_estado 
+                          E.nombre AS nombre_estado
                       FROM 
                           Estacion EN 
                           INNER JOIN Ciudad C on C.Id = EN.IdCiudad 

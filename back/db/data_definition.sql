@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS VivaAutobus;
+CREATE DATABASE VivaAutobus;
 
 USE VivaAutobus;
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Ciudad(
 CREATE TABLE IF NOT EXISTS Estacion(
     ID INT PRIMARY KEY,
     IDCiudad INT REFERENCES Ciudad(ID),
-    nombre VARCHAR(40)
+    nombre VARCHAR(60)
 );
 
 CREATE TABLE IF NOT EXISTS Parada(
