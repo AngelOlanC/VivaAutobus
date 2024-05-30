@@ -1,16 +1,11 @@
-
-## .env
-
-
 ```bash
-#SERVER
-SERVER_PORT='4000'
+  #SERVER
+  SERVER_PORT='4000'
 
-#DB CONFIGURATION
-HOST='localhost'
-DB_USER='root'
-DB_PASSWORD='contraseñaMySQL'
-DATABASE='VivaAutobus'
-DB_PORT='3306'
-
+  #DB CONFIGURATION
+  HOST='localhost'
+  DB_USER='root'
+  DB_PASSWORD='contraMySQL'
+  DATABASE='VivaAutobus'
+  DB_PORT='8080'
 ```
