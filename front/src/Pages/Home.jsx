@@ -11,7 +11,12 @@ const Home = () => {
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-1 px-auto">
-          <img src="/logo.png" alt="logo" className="justify-self-center" width="40%"/>
+        <img
+          src="/logo.png"
+          alt="logo"
+          className="justify-self-center"
+          width="40%"
+        />
         <div className="text-center">
           <h1 className="Titulo-Inicia-Sesion">Inicia sesion</h1>
           <form className="Formulario-Inicio-Sesion">
@@ -37,7 +42,10 @@ const Home = () => {
             <div className="pt-4">
               <p>
                 Aun no tienes cuenta?{" "}
-                <a onClick={handleSignUp} className="font-bold">
+                <a
+                  onClick={handleSignUp}
+                  className="font-bold registrate-anchor"
+                >
                   Registrate aqui!
                 </a>
               </p>
