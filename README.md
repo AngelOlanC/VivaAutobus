@@ -1,3 +1,4 @@
+#para .env
 ```bash
   #SERVER
   SERVER_PORT='4000'
