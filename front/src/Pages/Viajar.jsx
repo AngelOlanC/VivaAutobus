@@ -1,10 +1,37 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const URL_Estaciones = "http://localhost:4000/buscar/estaciones";
 
 const Viajar = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
+  const [estaciones, setEstaciones] = useState([]);
+
+  const ObtenerEstaciones = async () => {
+    try {
+      const response = await fetch(URL_Estaciones, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+
+      });
+      const data = await response.json();
+      console.log(data);
+      if (Array.isArray(data)) {
+        setEstaciones(data.rows);
+      }
+    } catch (error) {
+      alert("Error al obtener las estaciones", error);
+    }
+  }
+
+  useEffect(() => {
+    ObtenerEstaciones();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -47,14 +74,15 @@ const Viajar = () => {
             <label htmlFor="name" className="text-gray-700 font-bold">
               Origen:
             </label>
-            <input
-              type="text"
-              id="origen"
-              name="origen"
-              placeholder="Ejemplo: Ciudad de México"
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => handleOrigenChange(e.target.value)}
-            />
+            <select id="seleccionar-ciudad"
+              onChange={(e) => handleOrigenChange(e.target.value)}>
+              <option value="">Seleccionar Estacion</option>
+              {estaciones.map((estacion, index) => (
+                <option key={index} value={estacion.nombre_estacion}>
+                  {estacion.nombre_estacion}
+                </option>
+              ))}
+            </select>
             <label htmlFor="email" className="text-gray-700 font-bold">
               Destino:
             </label>

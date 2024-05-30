@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 const dotenv = require('dotenv')
@@ -6,7 +7,7 @@ dotenv.config()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
+app.use(cors())
 const routerBuscar = require('./Routes/Buscar')
 const routerCompra = require('./Routes/Compra')
 const routerSesion = require('./Routes/Sesion')
