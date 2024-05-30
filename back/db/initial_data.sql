@@ -102,6 +102,20 @@ VALUES
   (30, 'Terminal de Autobuses del Centro'),
   (31, 'Estacion de Autobuses Central'),
   (32, 'Terminal del Este');
-  
-INSERT INTO CONDUCTOR (nombre, email, telefono) VALUES
-	('Joaquin Castro Sarmiento', 'genji@JGL.com', '6672607022')
+
+INSERT INTO Conductor (nombre, email, telefono) VALUES
+	('Joaquin Castro Sarmiento', 'genji@JGL.com', '6672607022'),
+    ('Gilberto Montoya Lopez', 'gilberto@SDLG.com', '6670702269');
+
+INSERT INTO Autobus (marca) VALUES
+	('Pacifico'),
+    ('Pacifico'),
+    ('Pacifico'),
+    ('Pacifico');
+    
+INSERT INTO Viaje (idConductor, idAutobus) VALUES
+	(1, 1),
+    (1, 2),
+    (2, 1),
+    (2, 2);
+

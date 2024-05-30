@@ -4,6 +4,8 @@
   "description": "The server of VivaAutobus",
   "main": "server.js",
   "scripts": {
+    "server": "nodemon src/server.js",
+    "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,7 +14,8 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.9.7"
+    "mysql2": "^3.9.7",
+    "nodemon": "^3.1.2"
   },
   "devDependencies": {
     "express": "^4.19.2",
