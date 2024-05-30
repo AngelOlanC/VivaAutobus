@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "../Styles/Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,30 +13,30 @@ const Home = () => {
       <div className="grid grid-cols-1 px-auto">
         <img src="/logo.webp" alt="logo" className="justify-self-center" />
         <div className="text-center">
-          <h1 className="text-4xl mb-16">INICIA SESION</h1>
-          <form className="flex flex-col space-y-2 mx-8 md:mx-96">
-            <label htmlFor="username" className="text-gray-700 font-bold">
+          <h1 className="Titulo-Inicia-Sesion">INICIA SESION</h1>
+          <form className="Formulario-Inicio-Sesion">
+            <label htmlFor="username" className="user">
               Username:
             </label>
             <input
               type="text"
               id="username"
               name="username"
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="Entrada-Username"
             />
-            <label htmlFor="password" className="text-gray-700 font-bold">
+            <label htmlFor="password" className="pass">
               Password:
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="Entrada-Password"
             />
 
             <div className="pt-4">
               <p>
-                Aun no tienes cuenta?
+                Aun no tienes cuenta?{" "}
                 <a onClick={handleSignUp} className="font-bold">
                   Registrate aqui!
                 </a>

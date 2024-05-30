@@ -1,0 +1,57 @@
+.NavBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+
+.NavBarBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    background-color: #ffffff;
+
+}
+
+.NavLogin {
+
+    padding: 0 40px;
+    font-weight: 1000;
+    color: #424242;
+}
+
+.NavViajar {
+    padding: 0 40px;
+    font-weight: 1000;
+    color: #424242;
+
+}
+
+.NavPerfil {
+    padding: 0 40px;
+    font-weight: 1000;
+    color: #424242;
+
+}
+
+.NavLogin:hover {
+    background-color: #000;
+    color: #ffffff;
+    transition: 0.5s;
+    border-radius: 5px;
+}
+
+.NavViajar:hover {
+    background-color: #000;
+    color: #ffffff;
+    transition: 0.5s;
+    border-radius: 5px;
+}
+
+.NavPerfil:hover {
+    background-color: #000;
+    color: #ffffff;
+    transition: 0.5s;
+    border-radius: 5px;
+}
