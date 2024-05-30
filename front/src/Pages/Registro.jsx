@@ -81,7 +81,7 @@ const Registro = () => {
       confirmPassword !== ""
     ) {
       createUser(createUserURI);
-      // alert("Usuario registrado correctamente");
+      handleLogin();
     } else {
       alert("Llene todos los campos");
     }
