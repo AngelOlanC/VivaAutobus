@@ -1,28 +1,43 @@
-const pool = require('../Model/dbPool.js')
+const pool = require("../Model/dbPool.js");
 
-const buscarAsientos = async (_req, _res) => {
-}
+const buscarAsientos = async (_req, _res) => {};
 
 const buscarViajes = async (req, res) => {
-  const { idOrigen, idDestino, fecha } = req.params
+  const { idOrigen, idDestino, fecha } = req.params;
   // Se espera la fecha en formato AAAAMMDD
 
   if (idOrigen === idDestino) {
-    return res.status(400).send({ success: 'false', message: 'origen y destino no pueden ser iguales' })
+    return res.status(400).send({
+      success: "false",
+      message: "origen y destino no pueden ser iguales",
+    });
   }
   if (fecha.length !== 8) {
-    return res.status(400).send({ success: 'false', message: 'fecha con formato incorrecto, debe de ser AAAAMMDD' })
+    return res.status(400).send({
+      success: "false",
+      message: "fecha con formato incorrecto, debe de ser AAAAMMDD",
+    });
   }
 
   try {
-    const [idOrigenRows] = await pool.promise().query(`SELECT * FROM Estacion WHERE ID = ${idOrigen};`)
+    const [idOrigenRows] = await pool
+      .promise()
+      .query(`SELECT * FROM Estacion WHERE ID = ${idOrigen};`);
     if (idOrigenRows.length === 0) {
-      return res.status(400).send({ success: 'false', message: 'no existe una estacion con el id de origen' })
+      return res.status(400).send({
+        success: "false",
+        message: "no existe una estacion con el id de origen",
+      });
     }
 
-    const [idDestinoRows] = await pool.promise().query(`SELECT * FROM Estacion WHERE ID = ${idDestino};`)
+    const [idDestinoRows] = await pool
+      .promise()
+      .query(`SELECT * FROM Estacion WHERE ID = ${idDestino};`);
     if (idDestinoRows.length === 0) {
-      return res.status(400).send({ success: 'false', message: 'no existe una estacion con el id de destino' })
+      return res.status(400).send({
+        success: "false",
+        message: "no existe una estacion con el id de destino",
+      });
     }
 
     const sqlQuery = `SELECT 
@@ -39,13 +54,17 @@ const buscarViajes = async (req, res) => {
                       WHERE
                           date(P1.fechaEstimadaLlegada) >= '${fecha}'
                           P1.idEstacion = ${idOrigen} AND 
-                          P2.idEstacion = ${idDestino};`
-    const [rows] = await pool.promise().query(sqlQuery)
-    return res.status(200).send({ success: true, message: 'Viajes buscados con exito', rows })
+                          P2.idEstacion = ${idDestino};`;
+    const [rows] = await pool.promise().query(sqlQuery);
+    return res
+      .status(200)
+      .send({ success: true, message: "Viajes buscados con exito", rows });
   } catch (e) {
-    return res.status(500).send({ success: false, message: 'Error al buscar viajes' })
+    return res
+      .status(500)
+      .send({ success: false, message: "Error al buscar viajes" });
   }
-}
+};
 
 const buscarEstaciones = async (_req, res) => {
   try {
@@ -57,12 +76,18 @@ const buscarEstaciones = async (_req, res) => {
                       FROM 
                           Estacion EN 
                           INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
-                          INNER JOIN Estado E on E.id = C.IdEstado;`
-    const [rows] = await pool.promise().query(sqlQuery)
-    res.status(200).send({ success: true, message: 'Estaciones encontradas con exito', rows })
+                          INNER JOIN Estado E on E.id = C.IdEstado;`;
+    const [rows] = await pool.promise().query(sqlQuery);
+    res.status(200).send({
+      success: true,
+      message: "Estaciones encontradas con exito",
+      rows,
+    });
   } catch (e) {
-    res.status(500).send({ success: false, message: 'Error al buscar estaciones' })
+    res
+      .status(500)
+      .send({ success: false, message: "Error al buscar estaciones" });
   }
-}
+};
 
-module.exports = { buscarAsientos, buscarViajes, buscarEstaciones }
+module.exports = { buscarAsientos, buscarViajes, buscarEstaciones };
