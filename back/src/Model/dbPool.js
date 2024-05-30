@@ -14,4 +14,7 @@ const pool = mysql.createPool({
   port: DB_PORT
 })
 
+pool.getConnection(function (err) {
+  if (err) throw err
+})
 module.exports = pool

@@ -1,4 +1,4 @@
-const pool = require('../Model/DbPool.js')
+const pool = require('../Model/dbPool.js')
 const bcrypt = require('bcrypt')
 
 const crearUsuario = async (req, res) => {

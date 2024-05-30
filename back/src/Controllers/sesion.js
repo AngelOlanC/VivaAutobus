@@ -1,10 +1,9 @@
-const pool = require('../Model/DbPool.js')
+const pool = require('../Model/dbPool.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const iniciarSesion = async (req, res) => {
   try {
-    console.log(req.body)
     const { usuario, contrasena } = req.body
 
     if (!usuario) {
