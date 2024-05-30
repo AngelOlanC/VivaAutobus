@@ -1,79 +1,67 @@
 const pool = require('../Model/dbPool.js')
 
-const buscarAsientos = async (req, res) => {
-  // const { origen, destino, fecha } = req.params
-
-  // if (!origen) {
-  //   return res.status(400).send({ success: 'false', message: 'falta origen' })
-  // }
-
-  // if (!destino) {
-  //   return res.status(400).send({ success: 'false', message: 'falta destino' })
-  // }
-
-  // if (!fecha) {
-  //   return res.status(400).send({ success: 'false', message: 'falta fecha' })
-  // }
-
-  // try {
-  //   const idOrigen = await pool.promise().query(`select ID from Estacion where nombre='${origen}`)
-  //   const idDestino = await pool.promise().query(`select ID from Estacion where nombre='${destino}`)
-
-  //   const sqlQuery = `select p1.idViaje as idViaje, A.marca as marcaAutobus, hour(P1.fechaEstimadaLlegada) as horaEstimadaLlegada
-  //                     from Parada P1
-  //                     inner join Parada P2 on P1.idviaje = P2.idviaje and P1.numParada < P2.numParada
-  //                     inner join Viaje V on P1.idViaje = V.ID
-  //                     inner join Autobus A on V.IdAutobus = A.ID
-  //                     where P1.idEstacion = ${idOrigen} and P2.idEstacion = ${idDestino}`
-  //   const [rows] = pool.query(sqlQuery)
-  //   res.status(201).send({ success: true, message: 'Viajes buscados con exito', rows })
-  // } catch (e) {
-  //   res.status(500).send({ success: false, message: 'Error al buscar viajes' })
-  // }
+const buscarAsientos = async (_req, _res) => {
+  const { idViaje, }
 }
 
 const buscarViajes = async (req, res) => {
-  const { origen, destino, fecha } = req.params
+  const { idOrigen, idDestino, fecha } = req.params
+  // Se espera la fecha en formato AAAAMMDD
 
-  if (!origen) {
-    return res.status(400).send({ success: 'false', message: 'falta origen' })
+  if (idOrigen === idDestino) {
+    return res.status(400).send({ success: 'false', message: 'origen y destino no pueden ser iguales' })
   }
-
-  if (!destino) {
-    return res.status(400).send({ success: 'false', message: 'falta destino' })
-  }
-
-  if (!fecha) {
-    return res.status(400).send({ success: 'false', message: 'falta fecha' })
+  if (fecha.length !== 8) {
+    return res.status(400).send({ success: 'false', message: 'fecha con formato incorrecto, debe de ser AAAAMMDD' })
   }
 
   try {
-    const idOrigen = await pool.promise().query(`select ID from Estacion where nombre='${origen}`)
-    const idDestino = await pool.promise().query(`select ID from Estacion where nombre='${destino}`)
+    const [idOrigenRows] = await pool.promise().query(`SELECT * FROM Estacion WHERE ID = ${idOrigen};`)
+    if (idOrigenRows.length === 0) {
+      return res.status(400).send({ success: 'false', message: 'no existe una estacion con el id de origen' })
+    }
 
-    const sqlQuery = `select p1.idViaje as idViaje, A.marca as marcaAutobus, hour(P1.fechaEstimadaLlegada) as horaEstimadaLlegada
-                      from Parada P1
-                      inner join Parada P2 on P1.idviaje = P2.idviaje and P1.numParada < P2.numParada
-                      inner join Viaje V on P1.idViaje = V.ID
-                      inner join Autobus A on V.IdAutobus = A.ID
-                      where P1.idEstacion = ${idOrigen} and P2.idEstacion = ${idDestino}`
-    const [rows] = pool.query(sqlQuery)
-    res.status(200).send({ success: true, message: 'Viajes buscados con exito', rows })
+    const [idDestinoRows] = await pool.promise().query(`SELECT * FROM Estacion WHERE ID = ${idDestino};`)
+    if (idDestinoRows.length === 0) {
+      return res.status(400).send({ success: 'false', message: 'no existe una estacion con el id de destino' })
+    }
+
+    const sqlQuery = `SELECT 
+                          p1.idViaje AS id_viaje, 
+                          A.marca AS marca_autobus, 
+                          HOUR(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
+                          P2.numParada - P1.numParada AS numero_escalas,
+                          TIMESTAMPDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada) AS tiempo_estimado_viaje
+                      FROM
+                          Parada P1
+                          INNER JOIN Parada P2 on P1.idviaje = P2.idviaje AND P1.numParada < P2.numParada
+                          INNER JOIN Viaje V on P1.idViaje = V.ID
+                          INNER JOIN Autobus A on V.IdAutobus = A.ID
+                      WHERE
+                          date(P1.fechaEstimadaLlegada) >= '${fecha}'
+                          P1.idEstacion = ${idOrigen} AND 
+                          P2.idEstacion = ${idDestino};`
+    const [rows] = await pool.promise().query(sqlQuery)
+    return res.status(200).send({ success: true, message: 'Viajes buscados con exito', rows })
   } catch (e) {
-    res.status(500).send({ success: false, message: 'Error al buscar viajes' })
+    return res.status(500).send({ success: false, message: 'Error al buscar viajes' })
   }
 }
 
-const buscarEstaciones = async (req, res) => {
+const buscarEstaciones = async (_req, res) => {
   try {
-    const sqlQuery = `select EN.nombre as nombre_estacion, C.nombre as nombre_ciudad, E.nombre as nombre_estado 
-                      from Estacion EN 
-                      inner join Ciudad C on C.Id = EN.IdCiudad 
-                      inner join Estado E on E.id = C.IdEstado;`
-    const resultados = await pool.promise().query(sqlQuery)
-    res.status(200).send({ success: true, message: 'Estaciones encontradas con exito', resultados })
+    const sqlQuery = `SELECT 
+                          EN.ID AS estacion_id, 
+                          EN.nombre AS nombre_estacion, 
+                          C.nombre AS nombre_ciudad, 
+                          E.nombre AS nombre_estado 
+                      FROM 
+                          Estacion EN 
+                          INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
+                          INNER JOIN Estado E on E.id = C.IdEstado;`
+    const [rows] = await pool.promise().query(sqlQuery)
+    res.status(200).send({ success: true, message: 'Estaciones encontradas con exito', rows })
   } catch (e) {
-    console.error(e)
     res.status(500).send({ success: false, message: 'Error al buscar estaciones' })
   }
 }

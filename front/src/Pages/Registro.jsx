@@ -58,9 +58,9 @@ const Registro = () => {
   return (
     <div className="container mx-auto ">
       <div className="grid grid-cols-1 px-auto mb-40">
-        <img src="/logo.webp" alt="logo" className="justify-self-center" />
+        <img src="/logo.png" alt="logo" width ="40%" className="justify-self-center" />
         <div className="text-center">
-          <h1 className="text-4xl mb-16">CREA TU CUETNA</h1>
+          <h1 className="text-4xl mb-16">Crea tu cuenta</h1>
           <form className="flex flex-col space-y-2 mx-8 md:mx-96">
             <label htmlFor="username" className="text-gray-700 font-bold">
               Username:
@@ -115,7 +115,7 @@ const Registro = () => {
             />
             <div className="pt-4">
               <p>
-                Ya tienes cuenta?
+                Ya tienes cuenta?{" "}
                 <a onClick={handleLogin} className="font-bold">
                   Inicia sesion aqui!
                 </a>
