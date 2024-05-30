@@ -1,32 +1,18 @@
 
-# Para .env
-
-
-
-
-
-
 ## .env
 
 
 ```bash
-    #SERVER
-    SERVER_PORT='4000'
+#SERVER
+SERVER_PORT='4000'
 
-    #DB CONFIGURATION
-    HOST='localhost'
-    DB_USER='root'
-    DB_PASSWORD='@Disneyxa123'
-    DATABASE='VivaAutobus'
-    DB_PORT='3306'
+#DB CONFIGURATION
+HOST='localhost'
+DB_USER='root'
+DB_PASSWORD='@Disneyxa123'
+DATABASE='VivaAutobus'
+DB_PORT='3306'
 
-    #AUTHENTICATION
-    JWT_SECRET='FkHwVHWUukSkWHFVBvGHBfCdlMVfdtoR'
-```
-## Crear un archivo .env en la carpeta raiz de la carpeta Backed
-Pueden crear un puerto, este es el que uso:
-
-El default es: 3030
-```bash
-  PUERTO = 8080
+#AUTHENTICATION
+JWT_SECRET='FkHwVHWUukSkWHFVBvGHBfCdlMVfdtoR'
 ```
