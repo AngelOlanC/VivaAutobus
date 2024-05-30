@@ -40,22 +40,25 @@ const buscarViajes = async (req, res) => {
       });
     }
 
-    const sqlQuery = `SELECT 
-                          p1.idViaje AS id_viaje, 
-                          A.marca AS marca_autobus, 
-                          HOUR(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
-                          P2.numParada - P1.numParada AS numero_escalas,
-                          TIMESTAMPDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada) AS tiempo_estimado_viaje
-                      FROM
-                          Parada P1
-                          INNER JOIN Parada P2 on P1.idviaje = P2.idviaje AND P1.numParada < P2.numParada
-                          INNER JOIN Viaje V on P1.idViaje = V.ID
-                          INNER JOIN Autobus A on V.IdAutobus = A.ID
-                      WHERE
-                          date(P1.fechaEstimadaLlegada) >= '${fecha}'
-                          P1.idEstacion = ${idOrigen} AND 
-                          P2.idEstacion = ${idDestino};`;
-    const [rows] = await pool.promise().query(sqlQuery);
+    const sqlQuery = 
+      `SELECT
+        p1.idViaje AS id_viaje,
+        A.marca AS marca_autobus,
+        P1.fechaEstimadaLlegada AS hora_estimada_llegada,
+        (P2.numParada - P1.numParada - 1) AS numero_escalas,
+        hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
+      FROM
+        Parada P1
+        INNER JOIN Parada P2 on P1.idViaje = P2.idViaje AND P1.numParada < P2.numParada
+        INNER JOIN Viaje V on P1.idViaje = V.ID
+        INNER JOIN Autobus A on V.IdAutobus = A.ID
+      WHERE
+        date(P1.fechaEstimadaLlegada) >= '${fecha}'AND
+        P1.idEstacion = ${idOrigen} AND 
+        P2.idEstacion = ${idDestino};`;
+    const [rows, cols] = await pool
+      .promise()
+      .query(sqlQuery);
     return res
       .status(200)
       .send({ success: true, message: "Viajes buscados con exito", rows });

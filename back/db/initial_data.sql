@@ -54,7 +54,7 @@ VALUES
   (17, 'Tepic'),
   (18, 'Monterrey'),
   (19, 'Oaxaca Juarez'),
-  (20, 'Puebla angeles'),
+  (20, 'Puebla Angeles'),
   (21, 'Santiago Queretaro'),
   (22, 'Chetumal'),
   (23, 'San Luis Potosi'),
@@ -118,4 +118,73 @@ INSERT INTO Viaje (idConductor, idAutobus) VALUES
     (1, 2),
     (2, 1),
     (2, 2);
+    
+SELECT 
+  EN.ID AS estacion_id, 
+  E.nombre AS nombre_estado,
+  C.nombre AS nombre_ciudad, 
+  EN.nombre AS nombre_estacion
+FROM 
+  Estacion EN 
+  INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
+  INNER JOIN Estado E on E.id = C.IdEstado;
+  select * from Estacion;
+#	
+select hour('20240603060000');
+/*
+																									YYYYMMDDHHMMSS
+    Columnas
+			ID	Estado				Ciudad						Estacion							Hora estimada llegada
+            
+    Viaje con ID = 1
+		1	2 	Baja California 	Mexicali 					Terminal del Norte					20240603060000
+		2	24	Sinaloa				Culiacan Rosales			Terminal del Oeste					20240603090000
+		3	8 	Colima 				Colima 						Terminal del Centro					20240603120000
+		4	13	Jalisco				Guadalajara					Estacion del Centro					20240604050000
+		5	12	Hidalgo				Pachuca						Terminal de Autobuses del Oeste		20240604100000
+		6	20	Puebla				Puebla Angeles				Terminal de Autobuses del Sur		20240604180000
 
+    Viaje con ID = 2
+		1	8	Colima				Colima						Terminal del Centro					20240603080000
+		2	12	Hidalgo				Pachuca						Terminal de Autobuses del Oeste		20240603100000
+		3	23	San Luis Potosi		San Luis Potosi				Estacion Central de Autobuses		20240603110000
+		4	24	Sinaloa				Culiacan Rosales			Terminal del Oeste					20240603130000
+		5	28	Tlaxcala			Tlaxcala Xicohtencatl		Terminal del Norte					20240603150000
+		6	13	Jalisco				Guadalajara					Estacion del Centro					20240604100000
+		7	2 	Baja California 	Mexicali 					Terminal del Norte					20240604180000
+	
+    Viaje con ID = 3
+		1	32	Ciudad de Mexico	Ciudad de Mexico			Terminal del Este					20240603150000
+		2	31	Zacatecas			Zacatecas					Estacion de Autobuses Central		20240603190000
+		3	19	Oaxaca				Oaxaca Juarez				Estacion de Autobuses Central		20240603230000
+		4	24	Sinaloa				Culiacan Rosales			Terminal del Oeste					20240604060000
+		5	1	Aguascalientes		Aguascalientes				Estacion Central					20240604100000
+		6	18	Nuevo Leon			Monterrey					Terminal de Autobuses del Centro	20240604180000
+		7	13	Jalisco				Guadalajara					Estacion del Centro					20240604230000
+*/
+	
+INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
+	(1, 1, 2, 20240603060000),
+    (1, 2, 24, 20240603090000),
+    (1, 3, 8, 20240603120000),
+    (1, 4, 13, 20240604050000),
+	(1, 5, 12, 20240604100000),
+	(1, 6, 20, 20240604180000);
+
+INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
+	(2, 1, 8, 20240603080000),
+    (2, 2, 12, 20240603100000),
+    (2, 3, 23, 20240603110000),
+    (2, 4, 24, 20240603130000),
+	(2, 5, 28, 20240603150000),
+	(2, 6, 13, 20240604100000),
+	(2, 7, 2, 20240604180000);
+    
+INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
+	(3, 1, 32, 20240603150000),
+    (3, 2, 31, 20240603190000),
+    (3, 3, 19, 20240603230000),
+    (3, 4, 24, 20240604060000),
+	(3, 5, 1, 20240604100000),
+	(3, 6, 18, 20240604180000),
+	(3, 7, 13, 20240604230000);

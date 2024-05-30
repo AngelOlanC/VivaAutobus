@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Parada(
     NumParada INT,
     IDEstacion INT REFERENCES Estacion(ID),
     fechaEstimadaLlegada DATETIME,
-    constraINT PRIMARY KEY (IDViaje, NumParada),
+    constraint PRIMARY KEY (IDViaje, NumParada),
     INDEX i1 (IDEstacion, fechaEstimadaLlegada)
 );
 
