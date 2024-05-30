@@ -9,6 +9,37 @@ const Registro = () => {
 
   const navigate = useNavigate();
 
+  const createUserURI = "http://localhost:4000/usuario/crear";
+
+  async function createUser(url) {
+    const userData = {
+      nombreUsuario: userName,
+      nombres: name,
+      apellidos: lastName,
+      contrasena: password,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log("Fetch error: ", error);
+      throw error;
+    }
+  }
+
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
   };
@@ -49,7 +80,8 @@ const Registro = () => {
       password !== "" &&
       confirmPassword !== ""
     ) {
-      alert("Usuario registrado correctamente");
+      createUser(createUserURI);
+      // alert("Usuario registrado correctamente");
     } else {
       alert("Llene todos los campos");
     }
@@ -58,7 +90,12 @@ const Registro = () => {
   return (
     <div className="container mx-auto ">
       <div className="grid grid-cols-1 px-auto mb-40">
-        <img src="/logo.png" alt="logo" width ="40%" className="justify-self-center" />
+        <img
+          src="/logo.png"
+          alt="logo"
+          width="40%"
+          className="justify-self-center"
+        />
         <div className="text-center">
           <h1 className="text-4xl mb-16">Crea tu cuenta</h1>
           <form className="flex flex-col space-y-2 mx-8 md:mx-96">
