@@ -1,0 +1,18 @@
+
+## .env
+
+
+```bash
+    #SERVER
+    SERVER_PORT='4000'
+
+    #DB CONFIGURATION
+    HOST='localhost'
+    DB_USER='root'
+    DB_PASSWORD='contraseñadetuMySQL'
+    DATABASE='VivaAutobus'
+    DB_PORT='3306'
+
+    #AUTHENTICATION
+    JWT_SECRET='FkHwVHWUukSkWHFVBvGHBfCdlMVfdtoR'
+```
