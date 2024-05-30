@@ -11,17 +11,10 @@ const Viajar = () => {
 
   const ObtenerEstaciones = async () => {
     try {
-      const response = await fetch(URL_Estaciones, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-
-      });
+      const response = await fetch(URL_Estaciones);
       const data = await response.json();
       console.log(data);
-      if (Array.isArray(data)) {
+      if (Array.isArray(data.rows)) {
         setEstaciones(data.rows);
       }
     } catch (error) {
@@ -31,6 +24,7 @@ const Viajar = () => {
 
   useEffect(() => {
     ObtenerEstaciones();
+
   }, []);
 
   const navigate = useNavigate();
@@ -64,19 +58,20 @@ const Viajar = () => {
   };
 
   return (
-    <div className="container mx-auto my-20">
-      <div className="grid grid-cols-1 px-auto">
+    <div className="Viaje-Div-Central">
+      <div className="Viaje-Div-Div-Central">
         <div className="text-center">
-          <h1 className="text-4xl">Bienvenido a la página de Viaje</h1>
-          <p className="text-lg py-8">Llene los siguientes campos porfavor</p>
+          <h1 className="Encabezado-Viaje">Bienvenido a la página de Viaje</h1>
+          <p className="Mensaje-Campos">Llene los siguientes campos porfavor</p>
 
           <form className="flex flex-col space-y-2 mx-8 md:mx-96">
             <label htmlFor="name" className="text-gray-700 font-bold">
               Origen:
             </label>
-            <select id="seleccionar-ciudad"
+            <select
+              id="seleccionar-ciudad"
               onChange={(e) => handleOrigenChange(e.target.value)}>
-              <option value="">Seleccionar Estacion</option>
+              <option value="">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
                 <option key={index} value={estacion.nombre_estacion}>
                   {estacion.nombre_estacion}
@@ -86,14 +81,16 @@ const Viajar = () => {
             <label htmlFor="email" className="text-gray-700 font-bold">
               Destino:
             </label>
-            <input
-              type="destino"
-              id="destino"
-              name="destino"
-              placeholder="Ejemplo: Cancún"
-              className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => handleDestinoChange(e.target.value)}
-            />
+            <select
+              id="seleccionar-ciudad"
+              onChange={(e) => handleDestinoChange(e.target.value)}>
+              <option value="">Seleccionar Estacion:</option>
+              {estaciones.map((estacion, index) => (
+                <option key={index} value={estacion.nombre_estacion}>
+                  {estacion.nombre_estacion}
+                </option>
+              ))}
+            </select>
             <label htmlFor="startDate" className="text-gray-700 font-bold">
               Fecha:
             </label>

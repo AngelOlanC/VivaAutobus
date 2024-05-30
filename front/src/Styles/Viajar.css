@@ -1,0 +1,13 @@
+.Viaje-Div-Central {
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center {
+    display: flex;
+    padding: 10 20px;
+}
+
+.Mnesaje-Campos {
+    padding: 30px;
+}
