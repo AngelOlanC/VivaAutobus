@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import ViajesCards from "../Components/ViajesCards";
 
 const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
-const URL_EstacionPorID = "http://localhost:4000/buscar/estaciones";
 
 const ViajesDisponibles = () => {
   const location = useLocation();
@@ -19,7 +18,8 @@ const ViajesDisponibles = () => {
 
   const ObtenerViajes = async () => {
     try {
-      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`);
+      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`
+      );
       const data = await response.json();
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
@@ -61,10 +61,9 @@ const ViajesDisponibles = () => {
     ObtenerNombreOrigen();
     ObtenerNombreDestino();
     ObtenerViajes();
-    ObtenerEstacionOrigen();
-    ObtenerEstacionDestino();
   }, []);
 
+  const [tarjetaSeleccionada, setTarjetaSeleccionada] = useState(null);
 
   const handleTarjetaClick = (datosTarjeta) => {
     setTarjetaSeleccionada(datosTarjeta);
