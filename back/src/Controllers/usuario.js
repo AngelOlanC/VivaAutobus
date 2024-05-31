@@ -54,6 +54,42 @@ const crearUsuario = async (req, res) => {
   }
 }
 
+const iniciarSesion = async (req, res) => {
+  try {
+    const { nombreUsuario, contrasena } = req.body;
+
+    if (!nombreUsuario || !contrasena) return res.status(400).json({ error: 'Faltan datos' });
+
+    pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [nombreUsuario], async (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          error: 'Server error'
+        });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({
+          error: 'Email o contraseña incorrecto'
+        });
+      }
+      const validPassword = await bcrypt.compare(contrasena, results[0].contrasenaHasheada);
+      if (!validPassword) {
+        return res.status(404).json({
+          error: 'Email o contraseña incorrecto'
+        });
+      }
+      const token = await generarJWT(results[0].id, nombreUsuario);
+      return res.status(200).send({ success: 'true', token })
+    });
+
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      error: 'Server error'
+    });
+  }
+}
+
 const getUser = async (req, res) => {
   try {
     const id = req.userId;
@@ -79,4 +115,4 @@ const getUser = async (req, res) => {
   }
 }
 
-module.exports = { crearUsuario, getUser }
+module.exports = { crearUsuario, getUser, iniciarSesion }

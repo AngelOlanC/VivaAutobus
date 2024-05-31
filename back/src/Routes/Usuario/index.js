@@ -1,13 +1,14 @@
 const express = require('express')
-
-const routerPerfil = require('./Perfil')
 const routerViajes = require('./Viajes')
-const routerCrear = require('./crear')
+const { validarJWT } = require('../../middlewares/authentication')
+const { crearUsuario, iniciarSesion, getUser } = require('../../Controllers/usuario')
 
 const router = express.Router()
 
-router.use('/perfil', routerPerfil)
+router.get('/perfil', validarJWT, getUser);
 router.use('/viajes', routerViajes)
-router.use('/crear', routerCrear)
+
+router.post('/login', iniciarSesion)
+router.post('/register', crearUsuario)
 
 module.exports = router

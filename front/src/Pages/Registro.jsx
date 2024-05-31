@@ -1,30 +1,32 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Registro = () => {
-  const [userName, setUserName] = useState("");
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [userData, setUserData] = useState({
+    nombreUsuario: "",
+    nombres: "",
+    apellidos: "",
+    contrasena: "",
+    confirmarContrasena: "",
+  });
 
   const navigate = useNavigate();
 
-  const createUserURI = "http://localhost:4000/usuario/crear";
+  const createUserURI = "http://localhost:4000/usuario/register";
 
   async function createUser(url) {
-    const userData = {
-      nombreUsuario: userName,
-      nombres: name,
-      apellidos: lastName,
-      contrasena: password,
-    };
 
     const options = {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        nombreUsuario: userData.nombreUsuario,
+        nombres: userData.nombres,
+        apellidos: userData.apellidos,
+        contrasena: userData.contrasena,
+      }),
     };
 
     try {
@@ -40,24 +42,13 @@ const Registro = () => {
     }
   }
 
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
-  };
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setUserData({
+      ...userData,
+      [id]: value
+    });
+    console.log(userData)
   };
 
   const handleLogin = () => {
@@ -67,21 +58,20 @@ const Registro = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (userData.contrasena !== userData.confirmarContrasena) {
       alert("Las contraseñas no coinciden");
       return;
     }
 
     if (
-      password === confirmPassword &&
-      userName !== "" &&
-      name !== "" &&
-      lastName !== "" &&
-      password !== "" &&
-      confirmPassword !== ""
+      userData.contrasena === userData.confirmarContrasena &&
+      userData.nombreUsuario !== "" &&
+      userData.nombres !== "" &&
+      userData.apellidos !== "" &&
+      userData.contrasena !== ""
     ) {
       createUser(createUserURI);
-      handleLogin();
+      //handleLogin();
     } else {
       alert("Llene todos los campos");
     }
@@ -104,40 +94,40 @@ const Registro = () => {
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="nombreUsuario"
+              name="nombreUsuario"
               className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={handleUserNameChange}
+              onChange={handleChange}
             />
             <label htmlFor="text" className="text-gray-700 font-bold">
               Name:
             </label>
             <input
               type="text"
-              id="text"
-              name="text"
+              id="nombres"
+              name="nombres"
               className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={handleNameChange}
+              onChange={handleChange}
             />
             <label htmlFor="text" className="text-gray-700 font-bold">
               Last Name:
             </label>
             <input
               type="text"
-              id="text"
-              name="text"
+              id="apellidos"
+              name="apellidos"
               className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={handleLastNameChange}
+              onChange={handleChange}
             />
             <label htmlFor="password" className="text-gray-700 font-bold">
               Password:
             </label>
             <input
               type="password"
-              id="password"
-              name="password"
+              id="contrasena"
+              name="contrasena"
               className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={handlePasswordChange}
+              onChange={handleChange}
             />
 
             <label htmlFor="password" className="text-gray-700 font-bold">
@@ -145,10 +135,10 @@ const Registro = () => {
             </label>
             <input
               type="password"
-              id="password"
-              name="password"
+              id="confirmarContrasena"
+              name="confirmarContrasena"
               className="px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={handleConfirmPasswordChange}
+              onChange={handleChange}
             />
             <div className="pt-4">
               <p>
