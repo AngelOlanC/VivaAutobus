@@ -54,4 +54,29 @@ const crearUsuario = async (req, res) => {
   }
 }
 
-module.exports = { crearUsuario }
+const getUser = async (req, res) => {
+  try {
+    const id = req.userId;
+    pool.query('SELECT id,nombreUsuario,nombres,apellidos FROM Usuario WHERE id = ?', [id], async (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          error: 'Server error'
+        });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({
+          error: 'Usuario no encontrado'
+        });
+      }
+      res.json(results[0]);
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      error: 'Server error'
+    });
+  }
+}
+
+module.exports = { crearUsuario, getUser }
