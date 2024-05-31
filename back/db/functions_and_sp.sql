@@ -1,3 +1,15 @@
+DELIMITER $$
+CREATE FUNCTION miMin(a INT, b INT) RETURNS INT
+begin
+	return if (a <= b, a, b);
+end$$
+
+DELIMITER $$
+CREATE FUNCTION miMax(a INT, b INT) RETURNS INT
+begin
+	return if (a >= b, a, b);
+end$$
+
 SET GLOBAL event_scheduler = ON;
 
 DELIMITER //

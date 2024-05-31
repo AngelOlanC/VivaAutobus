@@ -1,16 +1,47 @@
 const pool = require("../Model/dbPool.js");
 
-const buscarAsientos = async (_req, _res) => {
+const buscarAsientos = async (req, res) => {
   const { idViaje, idOrigen, idDestino } = req.params;
+  const sqlQuery =
+    `
+    SELECT
+      asiento 
+    FROM
+      Boleto B
+      INNER JOIN Orden O on B.idOrden = O.id
+    WHERE
+      O.IdViaje = ${idViaje} and
+      miMin(${idOrigen}, O.ParadaOrigen) <= miMax(${idDestino}, O.ParadaDestino) and
+      miMin(${idDestino}, O.ParadaDestino) <= miMax(${idOrigen}, O.ParadaOrigen);
+    `
 
-  const query =
-    `
-    `
+    try {
+      const [rows, cols] = await pool
+      .promise()
+      .query(sqlQuery);
+      for (let i = 1; i <= 24; i++) { // Llenar estado de asientos
+        if (!rows[i - 1]) {
+          rows[i - 1] = {
+            "asiento": i,
+            "estado": "libre"
+          };
+        } else {
+          rows[i - 1].estado = "ocupado"
+        }
+      }
+      return res
+      .status(200)
+      .send({ success: true, message: "Asientos buscados con exito", rows });
+    } catch (e) {
+      console.log(e)
+      return res
+      .status(500)
+      .send({ success: false, message: "Error al buscar asientos" });
+    }
 };
 
 const buscarViajes = async (req, res) => {
   const { idOrigen, idDestino, fecha } = req.params;
-  // Se espera la fecha en formato AAAAMMDD
 
   if (idOrigen === idDestino) {
     return res.status(400).send({
@@ -27,7 +58,8 @@ const buscarViajes = async (req, res) => {
 
   try {
     const sqlQuery = 
-      `SELECT
+      `
+      SELECT
           p1.idViaje AS id_viaje,
           A.marca AS marca_autobus,
           hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
