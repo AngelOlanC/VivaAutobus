@@ -1,32 +1,41 @@
 const pool = require('../Model/dbPool.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { generarJWT } = require('../helpers/jwt.js')
 
 const iniciarSesion = async (req, res) => {
   try {
-    const { usuario, contrasena } = req.body
+    const { username, password } = req.body;
 
-    if (!usuario) {
-      return res.status(400).send({ success: 'false', message: 'falta usuario' })
-    }
-    if (!contrasena) {
-      return res.status(400).send({ success: 'false', message: 'falta contrasena' })
-    }
+    if (!username || !password) return res.status(400).json({ error: 'Faltan datos' });
 
-    const results = await pool.promise().query(`SELECT contrasenaHasheada FROM Usuario where nombreUsuario = '${usuario}';`)
-    if (!results[0] || !results[0][0]) {
-      return res.status(401).send({ success: 'false', message: 'usuario invalido' })
-    }
-    const contrasenaHasheada = results[0][0].contrasenaHasheada
+    pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [username], async (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          error: 'Server error'
+        });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({
+          error: 'Email o contraseña incorrecto'
+        });
+      }
+      const validPassword = await bcrypt.compare(password, results[0].contrasenaHasheada);
+      if (!validPassword) {
+        return res.status(404).json({
+          error: 'Email o contraseña incorrecto'
+        });
+      }
+      const token = await generarJWT(results[0].id, username);
+      return res.status(200).send({ sucess: 'true', token })
+    });
 
-    const coinciden = await bcrypt.compare(contrasena, contrasenaHasheada)
-    if (!coinciden) {
-      return res.status(401).send({ success: 'false', message: 'contrasena invalida' })
-    }
-    const token = jwt.sign({ nombreUsuario: usuario }, process.env.JWT_SECRET, { expiresIn: '1h' })
-    return res.status(200).send({ sucess: 'true', token })
-  } catch (err) {
-    return res.status(500).send({ success: 'false', message: 'no se pudo validar el inicio de sesion' })
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      error: 'Server error'
+    });
   }
 }
 

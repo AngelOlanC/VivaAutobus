@@ -3,6 +3,9 @@
   #SERVER
   SERVER_PORT='4000'
 
+  #JWT
+  SECRET_JWT='secret'
+
   #DB CONFIGURATION
   HOST='localhost'
   DB_USER='root'
