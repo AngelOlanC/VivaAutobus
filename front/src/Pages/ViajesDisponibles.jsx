@@ -7,6 +7,9 @@ const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
 const ViajesDisponibles = () => {
   const location = useLocation();
   const [viajes, setViajes] = useState([]);
+  const [NombreOrigen, setNombreOrigen] = useState("");
+  const [NombreDestino, setNombreDestino] = useState("");
+
   const { origen, destino, hora } = location.state || {
     origen: "N/A",
     destino: "N/A",
@@ -18,7 +21,6 @@ const ViajesDisponibles = () => {
       const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`
       );
       const data = await response.json();
-      console.log(data);
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
       }
@@ -27,7 +29,37 @@ const ViajesDisponibles = () => {
     }
   }
 
+  const ObtenerNombreOrigen = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/buscar/estaciones/${origen}`);
+      const data = await response.json();
+
+      if (Array.isArray(data.rows)) {
+        setNombreOrigen(data.rows[0].nombre_estacion)
+      }
+    } catch (error) {
+      alert("Error al obtener los viajes", error);
+    }
+  }
+
+  const ObtenerNombreDestino = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/buscar/estaciones/${destino}`);
+      const data = await response.json();
+
+      if (Array.isArray(data.rows)) {
+
+        setNombreDestino(data.rows[0].nombre_estacion)
+      }
+    } catch (error) {
+      alert("Error al obtener los viajes", error);
+    }
+  }
+
+
   useEffect(() => {
+    ObtenerNombreOrigen();
+    ObtenerNombreDestino();
     ObtenerViajes();
   }, []);
 
@@ -41,7 +73,10 @@ const ViajesDisponibles = () => {
     <div className="container mx-auto my-8">
       <h1 className="text-center text-4xl">Viajes Disponibles</h1>
       <h2 className="text-center text-2xl mt-4">
-        Origen: {origen} - Destino: {destino}
+        Origen: {NombreOrigen}
+      </h2>
+      <h2 className="text-center text-2xl mt-4">
+        Destino: {NombreDestino}
       </h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
         {viajes.map((viaje, index) => (
