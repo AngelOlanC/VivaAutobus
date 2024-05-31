@@ -3,10 +3,14 @@ import { useLocation } from "react-router-dom";
 import ViajesCards from "../Components/ViajesCards";
 
 const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
+const URL_EstacionPorID = "http://localhost:4000/buscar/estaciones";
 
 const ViajesDisponibles = () => {
   const location = useLocation();
   const [viajes, setViajes] = useState([]);
+  const [tarjetaSeleccionada, setTarjetaSeleccionada] = useState(null);
+  const [EstacionOrigen, setEstacionOrigen] = useState([]);
+  const [EstacionDestino, setEstacionDestino] = useState([]);
   const { origen, destino, hora } = location.state || {
     origen: "N/A",
     destino: "N/A",
@@ -15,8 +19,7 @@ const ViajesDisponibles = () => {
 
   const ObtenerViajes = async () => {
     try {
-      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`
-      );
+      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`);
       const data = await response.json();
       console.log(data);
       if (Array.isArray(data.rows)) {
@@ -27,11 +30,38 @@ const ViajesDisponibles = () => {
     }
   }
 
+  const ObtenerEstacionOrigen = async () => {
+    try {
+      const response = await fetch(`${URL_EstacionPorID}/${origen}`);
+      const data = await response.json();
+      console.log(data);
+      if (Array.isArray(data.rows)) {
+        setEstacionOrigen(data.rows);
+      }
+    } catch (error) {
+      alert("Error al obtener la estacion de origen", error);
+    }
+  }
+
+  const ObtenerEstacionDestino = async () => {
+    try {
+      const response = await fetch(`${URL_EstacionPorID}/${destino}`);
+      const data = await response.json();
+      console.log(data);
+      if (Array.isArray(data.rows)) {
+        setEstacionDestino(data.rows);
+      }
+    } catch (error) {
+      alert("Error al obtener la estacion de destino", error);
+    }
+  }
+
   useEffect(() => {
     ObtenerViajes();
+    ObtenerEstacionOrigen();
+    ObtenerEstacionDestino();
   }, []);
 
-  const [tarjetaSeleccionada, setTarjetaSeleccionada] = useState(null);
 
   const handleTarjetaClick = (datosTarjeta) => {
     setTarjetaSeleccionada(datosTarjeta);
@@ -41,7 +71,7 @@ const ViajesDisponibles = () => {
     <div className="container mx-auto my-8">
       <h1 className="text-center text-4xl">Viajes Disponibles</h1>
       <h2 className="text-center text-2xl mt-4">
-        Origen: {origen} - Destino: {destino}
+        Origen: {EstacionOrigen.nombre_estacion} - Destino: {EstacionDestino.nombre_estacion}
       </h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
         {viajes.map((viaje, index) => (
