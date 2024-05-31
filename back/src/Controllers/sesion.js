@@ -5,11 +5,11 @@ const { generarJWT } = require('../helpers/jwt.js')
 
 const iniciarSesion = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { nombreUsuario, contrasena } = req.body;
 
-    if (!username || !password) return res.status(400).json({ error: 'Faltan datos' });
+    if (!nombreUsuario || !contrasena) return res.status(400).json({ error: 'Faltan datos' });
 
-    pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [username], async (error, results) => {
+    pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [nombreUsuario], async (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
@@ -21,14 +21,14 @@ const iniciarSesion = async (req, res) => {
           error: 'Email o contraseña incorrecto'
         });
       }
-      const validPassword = await bcrypt.compare(password, results[0].contrasenaHasheada);
+      const validPassword = await bcrypt.compare(contrasena, results[0].contrasenaHasheada);
       if (!validPassword) {
         return res.status(404).json({
           error: 'Email o contraseña incorrecto'
         });
       }
-      const token = await generarJWT(results[0].id, username);
-      return res.status(200).send({ sucess: 'true', token })
+      const token = await generarJWT(results[0].id, nombreUsuario);
+      return res.status(200).send({ success: 'true', token })
     });
 
   } catch (e) {
