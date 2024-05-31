@@ -3,7 +3,9 @@ const pool = require("../Model/dbPool.js");
 const buscarAsientos = async (_req, _res) => {
   const { idViaje, idOrigen, idDestino } = req.params;
 
-
+  const query =
+    `
+    `
 };
 
 const buscarViajes = async (req, res) => {
@@ -69,7 +71,7 @@ const buscarEstaciones = async (_req, res) => {
     res.status(200).send({
       success: true,
       message: "Estaciones encontradas con exito",
-      rows,
+      rows
     });
   } catch (e) {
     res
@@ -78,4 +80,33 @@ const buscarEstaciones = async (_req, res) => {
   }
 };
 
-module.exports = { buscarAsientos, buscarViajes, buscarEstaciones };
+const buscarNombreEstacion = async (req, res) => {
+  const id = req.params.id;
+  console.log(id)
+  try {
+    const sqlQuery = 
+      `SELECT 
+          EN.ID AS estacion_id, 
+          EN.nombre AS nombre_estacion, 
+          C.nombre AS nombre_ciudad, 
+          E.nombre AS nombre_estado
+      FROM 
+          Estacion EN 
+          INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
+          INNER JOIN Estado E on E.id = C.IdEstado
+      WHERE EN.ID = ${id};`;
+    console.log(sqlQuery)
+    const [rows] = await pool.promise().query(sqlQuery);
+    res.status(200).send({
+      success: true,
+      message: "Estaciones encontradas con exito",
+      rows
+    });
+  } catch (e) {
+    res
+      .status(500)
+      .send({ success: false, message: "Error al buscar estaciones" });
+  }
+};
+
+module.exports = { buscarAsientos, buscarViajes, buscarEstaciones, buscarNombreEstacion };
