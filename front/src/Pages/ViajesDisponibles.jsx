@@ -35,7 +35,8 @@ const ViajesDisponibles = () => {
       const data = await response.json();
 
       if (Array.isArray(data.rows)) {
-        setNombreOrigen(data.rows[0].nombre_estacion)
+        const estacion = data.rows[0]
+        setNombreOrigen(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
       }
     } catch (error) {
       alert("Error al obtener los viajes", error);
@@ -48,8 +49,8 @@ const ViajesDisponibles = () => {
       const data = await response.json();
 
       if (Array.isArray(data.rows)) {
-
-        setNombreDestino(data.rows[0].nombre_estacion)
+        const estacion = data.rows[0]
+        setNombreDestino(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
       }
     } catch (error) {
       alert("Error al obtener los viajes", error);

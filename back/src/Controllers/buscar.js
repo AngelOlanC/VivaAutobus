@@ -66,7 +66,8 @@ const buscarEstaciones = async (_req, res) => {
       FROM 
           Estacion EN 
           INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
-          INNER JOIN Estado E on E.id = C.IdEstado;`;
+          INNER JOIN Estado E on E.id = C.IdEstado
+      ORDER BY nombre_ciudad, nombre_estado, nombre_estacion;`;
     const [rows] = await pool.promise().query(sqlQuery);
     res.status(200).send({
       success: true,
