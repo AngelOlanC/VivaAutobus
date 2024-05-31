@@ -4,11 +4,16 @@ begin
 	return if (a <= b, a, b);
 end$$
 
+DELIMITER ;
+
+select miMax(5, 6);
+
 DELIMITER $$
 CREATE FUNCTION miMax(a INT, b INT) RETURNS INT
 begin
 	return if (a >= b, a, b);
 end$$
+DELIMITER ;
 
 SET GLOBAL event_scheduler = ON;
 

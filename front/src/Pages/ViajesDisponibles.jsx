@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
 import ViajesCards from "../Components/ViajesCards";
+import axios from 'axios';
 
 const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
 
@@ -22,9 +23,13 @@ const ViajesDisponibles = () => {
 
   const ObtenerViajes = async () => {
     try {
-      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`
-      );
-      const data = await response.json();
+      const token = localStorage.getItem('token');
+      const URL = `${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`;
+      const response = await axios.get(URL, { headers: {
+        Authorization: token,
+      }});
+      const data = response.data;
+      console.log(data);
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
       }
@@ -33,11 +38,20 @@ const ViajesDisponibles = () => {
     }
   }
 
+  const ObtenerNombreEstacion = async (id) => {
+    const token = localStorage.getItem('token');
+    const URL = `http://localhost:4000/buscar/estaciones/${id}`;
+    const response = await axios.get(URL, { headers: {
+      Authorization: token,
+    }});
+    const data = response.data;
+    console.log(data);
+    return data;
+  };
+
   const ObtenerNombreOrigen = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/buscar/estaciones/${origen}`);
-      const data = await response.json();
-
+      const data = await ObtenerNombreEstacion(origen);
       if (Array.isArray(data.rows)) {
         const estacion = data.rows[0]
         setNombreOrigen(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
@@ -49,9 +63,9 @@ const ViajesDisponibles = () => {
 
   const ObtenerNombreDestino = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/buscar/estaciones/${destino}`);
-      const data = await response.json();
-
+      const data = await ObtenerNombreEstacion(destino);
+      console.log("D"
+      );
       if (Array.isArray(data.rows)) {
         const estacion = data.rows[0]
         setNombreDestino(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
@@ -71,6 +85,7 @@ const ViajesDisponibles = () => {
       alert("Debes iniciar sesión para acceder a esta página");
       return
     }
+    console.log("A")
     ObtenerNombreOrigen();
     ObtenerNombreDestino();
     ObtenerViajes();

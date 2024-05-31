@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Components/UserContext";
 import { useNavigate } from "react-router-dom";
-import "../Styles//Viajar.css";
+import "../Styles/Viajar.css";
 import axios from 'axios';
 
 const URL_Estaciones = "http://localhost:4000/buscar/estaciones";
@@ -18,7 +18,6 @@ const Viajar = () => {
   const ObtenerEstaciones = async () => {
     try {
       const token = localStorage.getItem('token')
-      console.log("AQUI ESTA EL TOKEN " + token)
       const response = await axios.get(URL_Estaciones, { headers: {
         Authorization: token,
       }});
