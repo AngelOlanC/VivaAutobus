@@ -11,7 +11,6 @@ const pool = mysql.createPool({
   user: DB_USER,
   password: DB_PASSWORD,
   database: DATABASE,
-  port: DB_PORT
 })
 
 pool.getConnection(function (err) {

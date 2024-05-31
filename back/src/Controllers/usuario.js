@@ -1,5 +1,6 @@
 const pool = require('../Model/dbPool.js')
 const bcrypt = require('bcrypt')
+const { generarJWT } = require('../helpers/jwt.js')
 
 const crearUsuario = async (req, res) => {
   const { nombreUsuario, contrasena, nombres, apellidos } = req.body
@@ -17,14 +18,39 @@ const crearUsuario = async (req, res) => {
   }
 
   try {
-    const contrasenaHasheada = await bcrypt.hash(contrasena, 10)
-    const query =
-      `INSERT INTO USUARIO (nombreUsuario, contrasenaHasheada, nombres, apellidos) VALUES
-          ('${nombreUsuario}', '${contrasenaHasheada}', '${nombres}', '${apellidos}');` 
-    pool.execute(query)
-    return res.status(200).send({ succes: 'true', message: 'insertado con exito' })
+    pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [nombreUsuario], async (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          error: 'Server error'
+        });
+      }
+      if (results.length > 0) {
+        return res.status(400).json({
+          success: 'false',
+          message: 'El username ya ha sido utilizado'
+        });
+      }
+
+      const contrasenaHasheada = await bcrypt.hash(contrasena, 10);
+      pool.query('INSERT INTO Usuario SET ?', { nombreUsuario, contrasenaHasheada, nombres, apellidos }, async (error, results) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json({
+            success: 'false',
+            message: 'Server error'
+          });
+        }
+        const token = await generarJWT(results.insertId, nombreUsuario);
+        return res.status(201).send({ succes: 'true', message: 'insertado con exito', token })
+      });
+    });
   } catch (e) {
-    return res.status(401).send({ success: 'false', message: 'ocurrio un error' })
+    console.log(e);
+    return res.status(500).json({
+      success: 'false',
+      message: 'Server error'
+    });
   }
 }
 
