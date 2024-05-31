@@ -1,14 +1,35 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ViajesCards from "../Components/ViajesCards";
 
+const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
+
 const ViajesDisponibles = () => {
   const location = useLocation();
+  const [viajes, setViajes] = useState([]);
   const { origen, destino, hora } = location.state || {
     origen: "N/A",
     destino: "N/A",
     hora: "N/A",
   };
+
+  const ObtenerViajes = async () => {
+    try {
+      const response = await fetch(`${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`
+      );
+      const data = await response.json();
+      console.log(data);
+      if (Array.isArray(data.rows)) {
+        setViajes(data.rows);
+      }
+    } catch (error) {
+      alert("Error al obtener los viajes", error);
+    }
+  }
+
+  useEffect(() => {
+    ObtenerViajes();
+  }, []);
 
   const [tarjetaSeleccionada, setTarjetaSeleccionada] = useState(null);
 
@@ -23,30 +44,16 @@ const ViajesDisponibles = () => {
         Origen: {origen} - Destino: {destino}
       </h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
-        <ViajesCards
-          origen={origen}
-          destino={destino}
-          hora={hora}
-          onClick={handleTarjetaClick}
-        />
-        <ViajesCards
-          origen={origen}
-          destino={destino}
-          hora={hora}
-          onClick={handleTarjetaClick}
-        />
-        <ViajesCards
-          origen={origen}
-          destino={destino}
-          hora={hora}
-          onClick={handleTarjetaClick}
-        />
-        <ViajesCards
-          origen={origen}
-          destino={destino}
-          hora={hora}
-          onClick={handleTarjetaClick}
-        />
+        {viajes.map((viaje, index) => (
+          <ViajesCards
+            key={index}
+            marca={viaje.marca_autobus}
+            horallegada={viaje.hora_estimada_llegada}
+            escalas={viaje.numero_escalas}
+            tiempoestimado={viaje.horas_estimadas_viaje}
+            onClick={handleTarjetaClick}
+          />
+        ))}
       </div>
       {tarjetaSeleccionada && (
         <div className="grid grid-cols-1 justify-items-center items-center align-middle">

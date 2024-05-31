@@ -48,14 +48,17 @@ const Viajar = () => {
       console.log("Porfavor llene todos los campos");
       return;
     }
+    let fecha = startDate.split("-").reduce((acc, item) => {
+      return acc + item;
+    }, "");
 
     navigate("/ViajesDisponibles", {
-      state: { origen, destino, hora: startDate },
+      state: { origen, destino, hora: fecha },
     });
 
     console.log("Origen: ", origen);
     console.log("Destino: ", destino);
-    console.log("Fecha: ", startDate);
+    console.log("Fecha: ", fecha);
   };
 
   return (
@@ -72,9 +75,9 @@ const Viajar = () => {
             <select className="seleccionar-ciudad-origen"
               id="seleccionar-ciudad"
               onChange={(e) => handleOrigenChange(e.target.value)}>
-              <option value="">Seleccionar Estacion:</option>
+              <option value="Ciudad">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
-                <option key={index} value={estacion.nombre_estacion}>
+                <option key={index} value={estacion.estacion_id}>
                   {estacion.nombre_estacion}
                 </option>
               ))}
@@ -87,7 +90,7 @@ const Viajar = () => {
               onChange={(e) => handleDestinoChange(e.target.value)}>
               <option value="">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
-                <option key={index} value={estacion.nombre_estacion}>
+                <option key={index} value={estacion.estacion_id}>
                   {estacion.nombre_estacion}
                 </option>
               ))}
