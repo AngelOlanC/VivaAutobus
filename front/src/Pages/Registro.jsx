@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Components/UserContext";
+import axios from "axios";
 const Registro = () => {
 
   const [userData, setUserData] = useState({
@@ -10,36 +12,29 @@ const Registro = () => {
     confirmarContrasena: "",
   });
 
+  const { fetchUser } = useUser();
+
   const navigate = useNavigate();
 
   const createUserURI = "http://localhost:4000/usuario/register";
 
   async function createUser(url) {
-
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const response = await axios.post(url, {
         nombreUsuario: userData.nombreUsuario,
         nombres: userData.nombres,
         apellidos: userData.apellidos,
         contrasena: userData.contrasena,
-      }),
-    };
-
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
+      });
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
       console.log("Fetch error: ", error);
       throw error;
     }
   }
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -47,12 +42,8 @@ const Registro = () => {
       ...userData,
       [id]: value
     });
-    console.log(userData)
   };
 
-  const handleLogin = () => {
-    navigate("/Login");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,13 +60,10 @@ const Registro = () => {
       userData.apellidos !== "" &&
       userData.contrasena !== ""
     ) {
-      try {
-        await createUser(createUserURI);
-        alert('Usuario registrado con exito')
-        handleLogin()
-      } catch (e) {
-        alert(e)
-      }
+      await createUser(createUserURI);
+      await fetchUser();
+      alert('Usuario registrado con exito')
+      navigate("/perfil");
     } else {
       alert("Llene todos los campos");
     }

@@ -42,7 +42,7 @@ const crearUsuario = async (req, res) => {
           });
         }
         const token = await generarJWT(results.insertId, nombreUsuario);
-        return res.status(201).send({ succes: 'true', message: 'insertado con exito', token })
+        return res.status(201).send({ success: 'true', message: 'insertado con exito', token })
       });
     });
   } catch (e) {
@@ -92,7 +92,7 @@ const iniciarSesion = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const id = req.userId;
+    const id = req.headers.userId;
     pool.query('SELECT id,nombreUsuario,nombres,apellidos FROM Usuario WHERE id = ?', [id], async (error, results) => {
       if (error) {
         console.log(error);

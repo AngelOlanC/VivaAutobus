@@ -17,7 +17,7 @@ const validarJWT = (req, res, next) => {
         req.headers.userId = id;
         req.headers.username = username;
 
-        console.log(req.headers)
+
     } catch (error) {
         console.log(error);
         return res.status(401).json({

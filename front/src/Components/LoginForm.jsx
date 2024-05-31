@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "./UserContext";
+import axios from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { fetchUser } = useUser();
 
   const loginURI = "http://localhost:4000/usuario/login";
 
@@ -13,22 +16,10 @@ const LoginForm = () => {
       nombreUsuario: username,
       contrasena: password
     };
-    console.log(username, password)
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    };
 
     try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error);
-      }
-      return data.token
+      const response = await axios.post(url, userData);
+      return response.data.token;
     } catch (error) {
       throw error;
     }
@@ -44,6 +35,7 @@ const LoginForm = () => {
     try {
       const token = await checkLogin(loginURI);
       localStorage.setItem("token", token)
+      await fetchUser()
       alert('Sesion iniciada con exito')
       navigate('/viajar')
     } catch (error) {
@@ -53,7 +45,7 @@ const LoginForm = () => {
   };
 
   const handleSignUp = () => {
-    navigate("/Registro");
+    navigate("/register");
   };
 
   const handleUsernameChange = (e) => {
