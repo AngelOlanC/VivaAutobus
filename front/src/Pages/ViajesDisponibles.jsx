@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUser } from "../Components/UserContext";
 import ViajesCards from "../Components/ViajesCards";
 
 const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
 
 const ViajesDisponibles = () => {
+  const { user, loading } = useUser();
+  const navigate = useNavigate();
+
   const location = useLocation();
   const [viajes, setViajes] = useState([]);
   const [NombreOrigen, setNombreOrigen] = useState("");
@@ -59,10 +63,18 @@ const ViajesDisponibles = () => {
 
 
   useEffect(() => {
+    if (loading) {
+      return
+    }
+    if (!loading && !user) {
+      navigate("/login");
+      alert("Debes iniciar sesión para acceder a esta página");
+      return
+    }
     ObtenerNombreOrigen();
     ObtenerNombreDestino();
     ObtenerViajes();
-  }, []);
+  }, [user, loading]);
 
   const [tarjetaSeleccionada, setTarjetaSeleccionada] = useState(null);
 

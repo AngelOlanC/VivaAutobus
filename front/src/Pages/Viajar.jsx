@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useUser } from "../Components/UserContext";
 import { useNavigate } from "react-router-dom";
 import "../Styles//Viajar.css";
+import axios from 'axios';
 
 const URL_Estaciones = "http://localhost:4000/buscar/estaciones";
 
 const Viajar = () => {
+  const { user, loading } = useUser();
+  const navigate = useNavigate();
+  
   const [startDate, setStartDate] = useState(new Date());
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
@@ -12,8 +17,12 @@ const Viajar = () => {
 
   const ObtenerEstaciones = async () => {
     try {
-      const response = await fetch(URL_Estaciones);
-      const data = await response.json();
+      const token = localStorage.getItem('token')
+      console.log("AQUI ESTA EL TOKEN " + token)
+      const response = await axios.get(URL_Estaciones, { headers: {
+        Authorization: token,
+      }});
+      const data = response.data;
       console.log(data);
       if (Array.isArray(data.rows)) {
         setEstaciones(data.rows);
@@ -24,11 +33,17 @@ const Viajar = () => {
   }
 
   useEffect(() => {
+    console.log(loading, user)
+    if (loading) {
+      return
+    }
+    if (!loading && !user) {
+      navigate("/login");
+      alert("Debes iniciar sesión para acceder a esta página");
+      return
+    }
     ObtenerEstaciones();
-
-  }, []);
-
-  const navigate = useNavigate();
+  }, [user, loading]);
 
   const handleDateChange = (newDate) => {
     setStartDate(newDate);

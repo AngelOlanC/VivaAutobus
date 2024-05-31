@@ -34,13 +34,12 @@ const LoginForm = () => {
 
     try {
       const token = await checkLogin(loginURI);
+      console.log(token)
       localStorage.setItem("token", token)
       await fetchUser()
-      alert('Sesion iniciada con exito')
-      navigate('/viajar')
+      navigate('/perfil')
     } catch (error) {
-      console.log(error)
-      alert(error)
+      alert(error.response.data.error)
     }
   };
 

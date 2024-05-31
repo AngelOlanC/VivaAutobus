@@ -33,7 +33,7 @@ const Registro = () => {
     }
   }
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/perfil");
   };
 
   const handleChange = (e) => {
@@ -63,7 +63,7 @@ const Registro = () => {
       await createUser(createUserURI);
       await fetchUser();
       alert('Usuario registrado con exito')
-      navigate("/perfil");
+      navigate("/viajar");
     } else {
       alert("Llene todos los campos");
     }

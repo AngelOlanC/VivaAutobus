@@ -7,6 +7,10 @@ const Perfil = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(loading, user)
+    if (loading) {
+      return
+    }
     if (!loading && !user) {
       alert("Debes iniciar sesión para acceder a esta página");
       navigate("/login");
