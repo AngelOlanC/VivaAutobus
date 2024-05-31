@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
 import ViajesCards from "../Components/ViajesCards";
-import axios from 'axios';
+import axios from "axios";
 
-const URL_ViajesDisponibles = "http://localhost:4000/buscar/viajes";
+const URL_ViajesDisponibles = "api/buscar/viajes";
 
 const ViajesDisponibles = () => {
   const { user, loading } = useUser();
@@ -23,11 +23,13 @@ const ViajesDisponibles = () => {
 
   const ObtenerViajes = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const URL = `${URL_ViajesDisponibles}/${origen}/${destino}/${hora}`;
-      const response = await axios.get(URL, { headers: {
-        Authorization: token,
-      }});
+      const response = await axios.get(URL, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = response.data;
       console.log(data);
       if (Array.isArray(data.rows)) {
@@ -36,18 +38,26 @@ const ViajesDisponibles = () => {
     } catch (error) {
       alert("Error al obtener los viajes", error);
     }
-  }
+  };
 
   const ObtenerNombreEstacion = async (id) => {
-    const token = localStorage.getItem('token');
-    const URL = `http://localhost:4000/buscar/estaciones/${id}`;
-    const response = await axios.get(URL, { headers: {
-      Authorization: token,
-    }});
+    const token = localStorage.getItem("token");
+    const URL = `api/buscar/estaciones/${id}`;
+    const response = await axios.get(URL, {
+      headers: {
+        Authorization: token,
+      },
+    });
     const data = response.data;
     if (Array.isArray(data.rows)) {
       const estacion = data.rows[0];
-      return estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion;
+      return (
+        estacion.nombre_ciudad +
+        ", " +
+        estacion.nombre_estado +
+        ", " +
+        estacion.nombre_estacion
+      );
     }
     return "???";
   };
@@ -68,15 +78,14 @@ const ViajesDisponibles = () => {
     }
   };
 
-
   useEffect(() => {
     if (loading) {
-      return
+      return;
     }
     if (!loading && !user) {
       navigate("/login");
       alert("Debes iniciar sesión para acceder a esta página");
-      return
+      return;
     }
     ObtenerNombreOrigen();
     ObtenerNombreDestino();
@@ -92,12 +101,8 @@ const ViajesDisponibles = () => {
   return (
     <div className="container mx-auto my-8">
       <h1 className="text-center text-4xl">Viajes Disponibles</h1>
-      <h2 className="text-center text-2xl mt-4">
-        {NombreOrigen}
-      </h2>
-      <h2 className="text-center text-2xl mt-4">
-        {NombreDestino}
-      </h2>
+      <h2 className="text-center text-2xl mt-4">{NombreOrigen}</h2>
+      <h2 className="text-center text-2xl mt-4">{NombreDestino}</h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
         {viajes.map((viaje, index) => (
           <ViajesCards

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
 import axios from "axios";
 const Registro = () => {
-
   const [userData, setUserData] = useState({
     nombreUsuario: "",
     nombres: "",
@@ -16,7 +15,7 @@ const Registro = () => {
 
   const navigate = useNavigate();
 
-  const createUserURI = "http://localhost:4000/usuario/register";
+  const createUserURI = "api/usuario/register";
 
   async function createUser(url) {
     try {
@@ -40,10 +39,9 @@ const Registro = () => {
     const { id, value } = e.target;
     setUserData({
       ...userData,
-      [id]: value
+      [id]: value,
     });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +60,7 @@ const Registro = () => {
     ) {
       await createUser(createUserURI);
       await fetchUser();
-      alert('Usuario registrado con exito')
+      alert("Usuario registrado con exito");
       navigate("/viajar");
     } else {
       alert("Llene todos los campos");

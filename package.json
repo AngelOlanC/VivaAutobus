@@ -1,0 +1,16 @@
+{
+  "name": "vivaautobus",
+  "version": "1.0.0",
+  "description": "```bash\r   #SERVER\r   SERVER_PORT='4000'",
+  "main": "index.js",
+  "workspaces": [
+    "back",
+    "front"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

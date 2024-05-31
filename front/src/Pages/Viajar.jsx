@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../Components/UserContext";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Viajar.css";
-import axios from 'axios';
+import axios from "axios";
 
-const URL_Estaciones = "http://localhost:4000/buscar/estaciones";
+const URL_Estaciones = "api/buscar/estaciones";
 
 const Viajar = () => {
   const { user, loading } = useUser();
   const navigate = useNavigate();
-  
+
   const [startDate, setStartDate] = useState(new Date());
   const [origen, setOrigen] = useState("");
   const [destino, setDestino] = useState("");
@@ -17,10 +17,12 @@ const Viajar = () => {
 
   const ObtenerEstaciones = async () => {
     try {
-      const token = localStorage.getItem('token')
-      const response = await axios.get(URL_Estaciones, { headers: {
-        Authorization: token,
-      }});
+      const token = localStorage.getItem("token");
+      const response = await axios.get(URL_Estaciones, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = response.data;
       console.log(data);
       if (Array.isArray(data.rows)) {
@@ -29,17 +31,17 @@ const Viajar = () => {
     } catch (error) {
       alert("Error al obtener las estaciones", error);
     }
-  }
+  };
 
   useEffect(() => {
-    console.log(loading, user)
+    console.log(loading, user);
     if (loading) {
-      return
+      return;
     }
     if (!loading && !user) {
       navigate("/login");
       alert("Debes iniciar sesión para acceder a esta página");
-      return
+      return;
     }
     ObtenerEstaciones();
   }, [user, loading]);
@@ -86,26 +88,30 @@ const Viajar = () => {
             <label htmlFor="name" className="Label-Origen-Viaje">
               Origen:
             </label>
-            <select className="seleccionar-ciudad-origen"
+            <select
+              className="seleccionar-ciudad-origen"
               id="seleccionar-ciudad"
-              onChange={(e) => handleOrigenChange(e.target.value)}>
+              onChange={(e) => handleOrigenChange(e.target.value)}
+            >
               <option value="Ciudad">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
                 <option key={index} value={estacion.estacion_id}>
-                  { estacion.nombre_ciudad + ", " + estacion.nombre_estado }
+                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado}
                 </option>
               ))}
             </select>
             <label htmlFor="email" className="Label-Destino-Viaje">
               Destino:
             </label>
-            <select className="seleccionar-ciudad-destino"
+            <select
+              className="seleccionar-ciudad-destino"
               id="seleccionar-ciudad"
-              onChange={(e) => handleDestinoChange(e.target.value)}>
+              onChange={(e) => handleDestinoChange(e.target.value)}
+            >
               <option value="">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
                 <option key={index} value={estacion.estacion_id}>
-                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado }
+                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado}
                 </option>
               ))}
             </select>

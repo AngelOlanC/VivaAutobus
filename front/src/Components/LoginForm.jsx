@@ -9,12 +9,12 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { fetchUser } = useUser();
 
-  const loginURI = "http://localhost:4000/usuario/login";
+  const loginURI = "api/usuario/login";
 
   async function checkLogin(url) {
     const userData = {
       nombreUsuario: username,
-      contrasena: password
+      contrasena: password,
     };
 
     try {
@@ -34,12 +34,12 @@ const LoginForm = () => {
 
     try {
       const token = await checkLogin(loginURI);
-      console.log(token)
-      localStorage.setItem("token", token)
-      await fetchUser()
-      navigate('/perfil')
+      console.log(token);
+      localStorage.setItem("token", token);
+      await fetchUser();
+      navigate("/perfil");
     } catch (error) {
-      alert(error.response.data.error)
+      alert(error.response.data.error);
     }
   };
 
