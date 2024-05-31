@@ -1,4 +1,4 @@
-const ViajesCards = ({ origen, destino, hora, onClick }) => {
+const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) => {
   const handleClick = () => {
     onClick({ origen, destino, hora });
   };
@@ -15,16 +15,20 @@ const ViajesCards = ({ origen, destino, hora, onClick }) => {
         </div>
         <div className="p-4">
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Origen:</h3>
-            <p className="text-gray-600">{origen}</p>
+            <h3 className="text-gray-900 font-semibold">Marca autobus:</h3>
+            <p className="text-gray-600">{marca}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Destino:</h3>
-            <p className="text-gray-600">{destino}</p>
+            <h3 className="text-gray-900 font-semibold">Hora de llegada:</h3>
+            <p className="text-gray-600">{horallegada}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Hora:</h3>
-            <p className="text-gray-600">{hora}</p>
+            <h3 className="text-gray-900 font-semibold">Escalas:</h3>
+            <p className="text-gray-600">{escalas}</p>
+          </div>
+          <div className="flex items-center justify-between py-2">
+            <h3 className="text-gray-900 font-semibold">Horas de viaje:</h3>
+            <p className="text-gray-600">{tiempoestimado}</p>
           </div>
         </div>
       </div>
