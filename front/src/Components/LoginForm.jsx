@@ -6,14 +6,14 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginURI = "http://localhost:4000/sesion/login";
+  const loginURI = "http://localhost:4000/usuario/login";
 
   async function checkLogin(url) {
     const userData = {
-      usuario: username,
-      contrasena: password,
+      nombreUsuario: username,
+      contrasena: password
     };
-
+    console.log(username, password)
     const options = {
       method: "POST",
       headers: {
@@ -24,18 +24,17 @@ const LoginForm = () => {
 
     try {
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
       const data = await response.json();
-      console.log(data);
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      return data.token
     } catch (error) {
-      console.log("Fetch error: ", error);
       throw error;
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!username || !password) {
       alert("Debe ingresar usuario y contraseña");
@@ -43,9 +42,13 @@ const LoginForm = () => {
     }
 
     try {
-      checkLogin(loginURI);
+      const token = await checkLogin(loginURI);
+      localStorage.setItem("token", token)
+      alert('Sesion iniciada con exito')
+      navigate('/viajar')
     } catch (error) {
-      throw error;
+      console.log(error)
+      alert(error)
     }
   };
 

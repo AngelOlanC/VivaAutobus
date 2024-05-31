@@ -34,8 +34,6 @@ const Registro = () => {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
-      const data = await response.json();
-      console.log(data);
     } catch (error) {
       console.log("Fetch error: ", error);
       throw error;
@@ -55,7 +53,7 @@ const Registro = () => {
     navigate("/Login");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (userData.contrasena !== userData.confirmarContrasena) {
@@ -70,8 +68,9 @@ const Registro = () => {
       userData.apellidos !== "" &&
       userData.contrasena !== ""
     ) {
-      createUser(createUserURI);
-      //handleLogin();
+      await createUser(createUserURI);
+      alert('Usuario registrado con exito')
+      handleLogin()
     } else {
       alert("Llene todos los campos");
     }

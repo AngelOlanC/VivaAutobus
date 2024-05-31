@@ -55,6 +55,7 @@ const crearUsuario = async (req, res) => {
 }
 
 const iniciarSesion = async (req, res) => {
+  console.log(req.body)
   try {
     const { nombreUsuario, contrasena } = req.body;
 
@@ -62,7 +63,6 @@ const iniciarSesion = async (req, res) => {
 
     pool.query('SELECT * FROM Usuario WHERE nombreUsuario = ?', [nombreUsuario], async (error, results) => {
       if (error) {
-        console.log(error);
         return res.status(500).json({
           error: 'Server error'
         });

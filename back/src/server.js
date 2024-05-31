@@ -9,11 +9,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
+const { validarJWT } = require('./middlewares/authentication')
+
 const routerBuscar = require('./Routes/Buscar')
 const routerComprar = require('./Routes/Comprar')
 const routerUsuario = require('./Routes/Usuario')
 
-app.use('/buscar', routerBuscar)
+app.use('/buscar', validarJWT, routerBuscar)
 app.use('/comprar', routerComprar)
 app.use('/usuario', routerUsuario)
 
