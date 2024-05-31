@@ -45,7 +45,7 @@ const validarSesion = (req, res) => {
     return res.status(401).send({ success: false, message: 'falta token en los headers' })
   }
   try {
-    jwt.verify(token, process.env.JWT_SECRET)
+    jwt.verify(token, process.env.SECRET_JWT)
     return res.status(200).send({ success: true, message: 'token correcto' })
   } catch (err) {
     return res.status(500).send({ success: 'false', message: 'token invalido' })
