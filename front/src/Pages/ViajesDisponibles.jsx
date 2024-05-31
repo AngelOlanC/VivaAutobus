@@ -45,35 +45,28 @@ const ViajesDisponibles = () => {
       Authorization: token,
     }});
     const data = response.data;
-    console.log(data);
-    return data;
+    if (Array.isArray(data.rows)) {
+      const estacion = data.rows[0];
+      return estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion;
+    }
+    return "???";
   };
 
   const ObtenerNombreOrigen = async () => {
     try {
-      const data = await ObtenerNombreEstacion(origen);
-      if (Array.isArray(data.rows)) {
-        const estacion = data.rows[0]
-        setNombreOrigen(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
-      }
+      setNombreOrigen(await ObtenerNombreEstacion(origen));
     } catch (error) {
       alert("Error al obtener los viajes", error);
     }
-  }
+  };
 
   const ObtenerNombreDestino = async () => {
     try {
-      const data = await ObtenerNombreEstacion(destino);
-      console.log("D"
-      );
-      if (Array.isArray(data.rows)) {
-        const estacion = data.rows[0]
-        setNombreDestino(estacion.nombre_ciudad + ", " + estacion.nombre_estado + ", " + estacion.nombre_estacion)
-      }
+      setNombreDestino(await ObtenerNombreEstacion(destino));
     } catch (error) {
       alert("Error al obtener los viajes", error);
     }
-  }
+  };
 
 
   useEffect(() => {
@@ -85,7 +78,6 @@ const ViajesDisponibles = () => {
       alert("Debes iniciar sesión para acceder a esta página");
       return
     }
-    console.log("A")
     ObtenerNombreOrigen();
     ObtenerNombreDestino();
     ObtenerViajes();

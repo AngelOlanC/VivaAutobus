@@ -92,7 +92,7 @@ const Viajar = () => {
               <option value="Ciudad">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
                 <option key={index} value={estacion.estacion_id}>
-                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado}
+                  { estacion.nombre_ciudad + ", " + estacion.nombre_estado }
                 </option>
               ))}
             </select>
@@ -105,7 +105,7 @@ const Viajar = () => {
               <option value="">Seleccionar Estacion:</option>
               {estaciones.map((estacion, index) => (
                 <option key={index} value={estacion.estacion_id}>
-                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado}
+                  {estacion.nombre_ciudad + ", " + estacion.nombre_estado }
                 </option>
               ))}
             </select>
