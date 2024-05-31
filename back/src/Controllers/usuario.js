@@ -115,4 +115,8 @@ const getUser = async (req, res) => {
   }
 }
 
-module.exports = { crearUsuario, getUser, iniciarSesion }
+module.exports = {
+  crearUsuario,
+  getUser,
+  iniciarSesion
+}

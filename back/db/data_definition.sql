@@ -2,50 +2,6 @@ CREATE DATABASE VivaAutobus;
 
 USE VivaAutobus;
 
-CREATE TABLE IF NOT EXISTS Autobus(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    marca VARCHAR(20) 
-);
-
-CREATE TABLE IF NOT EXISTS Conductor(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50),
-    email VARCHAR(50),
-    telefono CHAR(10)
-);
-
-CREATE TABLE IF NOT EXISTS Viaje(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    IDConductor INT REFERENCES Conductor(ID),
-    IDAutobus INT REFERENCES Autobus(ID)
-);
-
-CREATE TABLE IF NOT EXISTS Estado(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(40)
-);
-
-CREATE TABLE IF NOT EXISTS Ciudad(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    IDEstado INT REFERENCES Estado(ID),
-    nombre VARCHAR(40)
-);
-
-CREATE TABLE IF NOT EXISTS Estacion(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    IDCiudad INT REFERENCES Ciudad(ID),
-    nombre VARCHAR(60)
-);
-
-CREATE TABLE IF NOT EXISTS Parada(
-    IDViaje INT REFERENCES Viaje(ID),
-    NumParada INT,
-    IDEstacion INT REFERENCES Estacion(ID),
-    fechaEstimadaLlegada DATETIME,
-    constraint PRIMARY KEY (IDViaje, NumParada),
-    INDEX i1 (IDEstacion, fechaEstimadaLlegada)
-);
-
 CREATE TABLE IF NOT EXISTS Usuario(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombreUsuario VARCHAR(35),
@@ -55,18 +11,76 @@ CREATE TABLE IF NOT EXISTS Usuario(
     CONSTRAINT usuarioUnico UNIQUE(nombreUsuario)
 );
 
-CREATE TABLE IF NOT EXISTS Boleto(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    IDUsuario INT,
-    IDViaje INT,
+CREATE TABLE IF NOT EXISTS Estado(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(40)
+);
+
+CREATE TABLE IF NOT EXISTS Ciudad(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    idEstado INT REFERENCES Estado(id),
+    nombre VARCHAR(40)
+);
+
+CREATE TABLE IF NOT EXISTS Estacion(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    idCiudad INT REFERENCES Ciudad(id),
+    nombre VARCHAR(60)
+);
+
+CREATE TABLE IF NOT EXISTS Autobus(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    marca VARCHAR(20) 
+);
+
+CREATE TABLE IF NOT EXISTS Conductor(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50),
+    email VARCHAR(50),
+    telefono CHAR(10)
+);
+
+CREATE TABLE IF NOT EXISTS Viaje(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    idConductor INT REFERENCES Conductor(id),
+    idAutobus INT REFERENCES Autobus(id)
+);
+
+CREATE TABLE IF NOT EXISTS Parada(
+    idViaje INT REFERENCES Viaje(id),
+    NumParada INT,
+    idEstacion INT REFERENCES Estacion(id),
+    fechaEstimadaLlegada DATETIME,
+    constraint PRIMARY KEY (idViaje, NumParada),
+    INDEX i1 (idEstacion, fechaEstimadaLlegada)
+);
+
+# Falta meter informacion relacionada con el pago de paypal
+CREATE TABLE IF NOT EXISTS Orden(
+    id INT PRIMARY KEY,
+    idViaje INT,
+    idUsuario INT,
     ParadaOrigen INT,
     ParadaDestino INT,
-    numAsiento CHAR,
     metodoPago VARCHAR(10),
-    costo DECIMAL(10, 2),
-    fechaVencimiento DATETIME,
-    CONSTRAINT FOREIGN KEY (ID) REFERENCES Usuario(ID),
-    CONSTRAINT FOREIGN KEY (IDViaje, ParadaOrigen) REFERENCES Parada(IDViaje, NumParada),
-    CONSTRAINT FOREIGN KEY (IDViaje, ParadaDestino) REFERENCES Parada(IDViaje, NumParada),
-    INDEX i (IDViaje, ParadaOrigen, ParadaDestino)
+    costo INT,
+    fechaExpiracion DATETIME,
+    CONSTRAINT FOREIGN KEY (id) REFERENCES Usuario(id),
+    CONSTRAINT FOREIGN KEY (idViaje, ParadaOrigen) REFERENCES Parada(idViaje, NumParada),
+    CONSTRAINT FOREIGN KEY (idViaje, ParadaDestino) REFERENCES Parada(idViaje, NumParada),
+    INDEX indexViaje (idViaje, ParadaOrigen, ParadaDestino),
+    INDEX indexUsuario (idUsuario),
+    INDEX indexFechaExpiracion(fechaExpiracion)
+);
+
+CREATE TABLE IF NOT EXISTS Boleto(
+	idOrden INT,
+    asiento INT,
+	nombre VARCHAR(40),
+    apellidoPaterno VARCHAR(40),
+    apellidoMaterno VARCHAR(40),
+    email VARCHAR(40),
+    fechaNacimiento datetime,
+    CONSTRAINT PRIMARY KEY (idOrden, asiento),
+    CONSTRAINT FOREIGN KEY (idOrden) REFERENCES Orden(id)
 );

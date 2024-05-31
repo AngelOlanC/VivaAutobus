@@ -110,4 +110,9 @@ const buscarNombreEstacion = async (req, res) => {
   }
 };
 
-module.exports = { buscarAsientos, buscarViajes, buscarEstaciones, buscarNombreEstacion };
+module.exports = {
+  buscarAsientos,
+  buscarViajes,
+  buscarEstaciones,
+  buscarNombreEstacion
+};

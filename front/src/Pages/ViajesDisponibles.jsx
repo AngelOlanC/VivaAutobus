@@ -74,10 +74,10 @@ const ViajesDisponibles = () => {
     <div className="container mx-auto my-8">
       <h1 className="text-center text-4xl">Viajes Disponibles</h1>
       <h2 className="text-center text-2xl mt-4">
-        Origen: {NombreOrigen}
+        {NombreOrigen}
       </h2>
       <h2 className="text-center text-2xl mt-4">
-        Destino: {NombreDestino}
+        {NombreDestino}
       </h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
         {viajes.map((viaje, index) => (

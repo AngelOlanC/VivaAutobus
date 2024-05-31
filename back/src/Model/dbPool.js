@@ -13,7 +13,4 @@ const pool = mysql.createPool({
   database: DATABASE,
 })
 
-pool.getConnection(function (err) {
-  if (err) throw err
-})
 module.exports = pool

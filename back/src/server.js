@@ -8,12 +8,13 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+
 const routerBuscar = require('./Routes/Buscar')
-const routerCompra = require('./Routes/Compra')
+const routerComprar = require('./Routes/Comprar')
 const routerUsuario = require('./Routes/Usuario')
 
 app.use('/buscar', routerBuscar)
-app.use('/compra', routerCompra)
+app.use('/comprar', routerComprar)
 app.use('/usuario', routerUsuario)
 
 const port = process.env.SERVER_PORT ?? 3000

@@ -27,3 +27,5 @@ begin
 end$$
 
 DELIMITER ;
+
+# TODO: SP que inserte viajes, incluyendo cada una de las paradas
