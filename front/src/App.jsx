@@ -6,6 +6,7 @@ import Viajar from "./Pages/Viajar";
 import Registro from "./Pages/Registro";
 import Pago from "./Pages/Pago";
 import ViajesDisponibles from "./Pages/ViajesDisponibles";
+import ViajesPendientes from "./Pages/ViajesPendientes";
 import ViajesCompletados from "./Pages/ViajesCompletados";
 import AsientosDisponibles from "./Pages/AsientosDisponibles";
 import "./input.css";
@@ -25,6 +26,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/viajesDisponibles" element={<ViajesDisponibles />} />
         <Route path="/viajesCompletados" element={<ViajesCompletados />} />
+        <Route path="/viajesPendientes" element={<ViajesPendientes />} />
+        <Route path="/asientoDisponible" element={<AsientoDisponible />} />
       </Routes>
     </UserProvider>
   );

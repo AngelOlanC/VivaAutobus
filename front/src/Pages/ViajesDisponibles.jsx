@@ -96,6 +96,7 @@ const ViajesDisponibles = () => {
 
   const handleTarjetaClick = (datosTarjeta) => {
     setTarjetaSeleccionada(datosTarjeta);
+    navigate("/asientoDisponible");
   };
 
   return (

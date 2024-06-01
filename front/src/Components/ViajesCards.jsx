@@ -30,6 +30,11 @@ const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) =
             <h3 className="text-gray-900 font-semibold">Horas de viaje:</h3>
             <p className="text-gray-600">{tiempoestimado}</p>
           </div>
+          <div className="flex items-center justify-between py-2">
+            <button style={{ backgroundColor: 'red', color: 'white', borderRadius: 5, margin: '0 auto', fontWeight: 500, padding: 10 }}>
+              cancelar
+            </button>
+          </div>
         </div>
       </div>
     </div>
