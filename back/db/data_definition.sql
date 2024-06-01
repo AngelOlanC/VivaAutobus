@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS Parada(
     INDEX i1 (idEstacion, fechaEstimadaLlegada)
 );
 
-# Falta meter informacion relacionada con el pago de paypal
 CREATE TABLE IF NOT EXISTS Orden(
     id INT PRIMARY KEY,
     idViaje INT,

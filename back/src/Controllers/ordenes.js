@@ -93,7 +93,9 @@ const actualizarBd = async (req, res) => {
   const { username, userId } = req.headers;
   console.log(username, userId)
 
-
+  `
+  INSERT
+  `
 }
 
 module.exports = {

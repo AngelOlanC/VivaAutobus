@@ -7,6 +7,7 @@ import Registro from "./Pages/Registro";
 import Pago from "./Pages/Pago";
 import ViajesDisponibles from "./Pages/ViajesDisponibles";
 import ViajesCompletados from "./Pages/ViajesCompletados";
+import AsientosDisponibles from "./Pages/AsientosDisponibles";
 import "./input.css";
 import { UserProvider } from "./Components/UserContext";
 
@@ -15,6 +16,7 @@ const App = () => {
     <UserProvider>
       <NavBar />
       <Routes>
+        <Route path="/asientos/:idViaje/:idOrigen/:idDestino" element={<AsientosDisponibles />} />
         <Route path="/login" element={<Home />} />
         <Route path="/Viajar" element={<Viajar />} />
         <Route path="/perfil" element={<Perfil />} />

@@ -188,3 +188,24 @@ INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
 	(3, 5, 1, 20240604100000),
 	(3, 6, 18, 20240604180000),
 	(3, 7, 13, 20240604230000);
+
+INSERT INTO Viaje (idConductor, idAutobus) VALUES (1, 1);
+INSERT INTO Viaje (idConductor, idAutobus) VALUES (1, 1);
+INSERT INTO Viaje (idConductor, idAutobus) VALUES (1, 1); 
+
+
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (1, 7, 3, '2024-06-04 08:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (1, 8, 4, '2024-06-04 09:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (1, 9, 5, '2024-06-04 10:00:00');
+
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (2, 8, 6, '2024-06-04 08:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (2, 9, 7, '2024-06-04 09:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (2, 10, 9, '2024-06-04 10:00:00');
+
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (3, 8, 11, '2024-06-05 08:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (3, 9, 13, '2024-06-05 09:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (3, 10, 14, '2024-06-05 10:00:00');
+
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (4, 1, 1, '2024-06-06 08:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (4, 2, 2, '2024-06-06 09:00:00');
+INSERT INTO Parada (idViaje, NumParada, idEstacion, fechaEstimadaLlegada) VALUES (4, 3, 3, '2024-06-06 10:00:00');
