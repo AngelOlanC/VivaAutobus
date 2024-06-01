@@ -2,7 +2,7 @@ const pool = require("../Model/dbPool.js");
 
 const buscarAsientos = async (req, res) => {
   const { idViaje, idOrigen, idDestino } = req.params;
-  
+
   const sqlQuery =
     `
     SELECT
@@ -16,29 +16,29 @@ const buscarAsientos = async (req, res) => {
       miMin(${idDestino}, O.ParadaDestino) <= miMax(${idOrigen}, O.ParadaOrigen);
     `
 
-    try {
-      const [rows, cols] = await pool
+  try {
+    const [rows, cols] = await pool
       .promise()
       .query(sqlQuery);
-      for (let i = 1; i <= 24; i++) { // Llenar estado de asientos
-        if (!rows[i - 1]) {
-          rows[i - 1] = {
-            "asiento": i,
-            "estado": "libre"
-          };
-        } else {
-          rows[i - 1].estado = "ocupado"
-        }
+    for (let i = 1; i <= 24; i++) { // Llenar estado de asientos
+      if (!rows[i - 1]) {
+        rows[i - 1] = {
+          "asiento": i,
+          "estado": "libre"
+        };
+      } else {
+        rows[i - 1].estado = "ocupado"
       }
-      return res
+    }
+    return res
       .status(200)
       .send({ success: true, message: "Asientos buscados con exito", rows });
-    } catch (e) {
-      console.log(e)
-      return res
+  } catch (e) {
+    console.log(e)
+    return res
       .status(500)
       .send({ success: false, message: "Error al buscar asientos" });
-    }
+  }
 };
 
 const buscarViajes = async (req, res) => {
@@ -58,7 +58,7 @@ const buscarViajes = async (req, res) => {
   }
 
   try {
-    const sqlQuery = 
+    const sqlQuery =
       `
       SELECT
           p1.idViaje AS id_viaje,
@@ -90,7 +90,7 @@ const buscarViajes = async (req, res) => {
 
 const buscarEstaciones = async (_req, res) => {
   try {
-    const sqlQuery = 
+    const sqlQuery =
       `SELECT 
           EN.ID AS estacion_id, 
           EN.nombre AS nombre_estacion, 
@@ -118,7 +118,7 @@ const buscarNombreEstacion = async (req, res) => {
   const id = req.params.id;
   console.log(id)
   try {
-    const sqlQuery = 
+    const sqlQuery =
       `SELECT 
           EN.ID AS estacion_id, 
           EN.nombre AS nombre_estacion, 
@@ -143,9 +143,45 @@ const buscarNombreEstacion = async (req, res) => {
   }
 };
 
+const buscarViajesCompletados = async (req, res) => {
+  const { idUsuario } = req.params;
+
+  try {
+    const sqlQuery =
+      `
+      SELECT
+          p1.idViaje AS id_viaje,
+          A.marca AS marca_autobus,
+          hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
+          (P2.numParada - P1.numParada - 1) AS numero_escalas,
+          hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
+      FROM
+          Parada P1
+          INNER JOIN Parada P2 on P1.idViaje = P2.idViaje AND P1.numParada < P2.numParada
+          INNER JOIN Viaje V on P1.idViaje = V.ID
+          INNER JOIN Autobus A on V.IdAutobus = A.ID
+          INNER JOIN Orden O on P1.idViaje = O.IdViaje
+          INNER JOIN Usuario U on O.IdUsuario = U.ID
+      WHERE
+          U.ID = ${idUsuario};`;
+    const [rows, cols] = await pool
+      .promise()
+      .query(sqlQuery);
+    return res
+      .status(200)
+      .send({ success: true, message: "Viajes buscados con exito", rows });
+  } catch (e) {
+    return res
+      .status(500)
+      .send({ success: false, message: "Error al buscar viajes" });
+  }
+}
+
+
 module.exports = {
   buscarAsientos,
   buscarViajes,
   buscarEstaciones,
-  buscarNombreEstacion
+  buscarNombreEstacion,
+  buscarViajesCompletados
 };

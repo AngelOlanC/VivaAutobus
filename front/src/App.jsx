@@ -6,6 +6,7 @@ import Viajar from "./Pages/Viajar";
 import Registro from "./Pages/Registro";
 import Pago from "./Pages/Pago";
 import ViajesDisponibles from "./Pages/ViajesDisponibles";
+import ViajesCompletados from "./Pages/ViajesCompletados";
 import "./input.css";
 import { UserProvider } from "./Components/UserContext";
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/pago" element={<Pago />} />
         <Route path="/" element={<Home />} />
         <Route path="/viajesDisponibles" element={<ViajesDisponibles />} />
+        <Route path="/viajesCompletados" element={<ViajesCompletados />} />
       </Routes>
     </UserProvider>
   );

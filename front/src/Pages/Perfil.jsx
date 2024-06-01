@@ -20,6 +20,13 @@ const Perfil = () => {
     }
   }, [user, loading]);
 
+  const handleBotonViajesCompletados = () => {
+    navigate("/viajesCompletados");
+  };
+
+  const handleBotonViajesPendientes = () => {
+    navigate("/viajesPendientes");
+  };
 
 
   return (
@@ -45,8 +52,8 @@ const Perfil = () => {
           </div>
         </div>
         <div className="Cuadro-Botones-Viaje">
-          <button className="Boton-Viajes-Perfil">Viajes Completados</button>
-          <button className="Boton-Finalizados-Perfil">Viajes Pendientes</button>
+          <button className="Boton-Viajes-Perfil" onClick={handleBotonViajesCompletados}>Viajes Completados</button>
+          <button className="Boton-Finalizados-Perfil" onClick={handleBotonViajesPendientes}>Viajes Pendientes</button>
 
         </div>
       </div>
