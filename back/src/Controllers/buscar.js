@@ -3,8 +3,7 @@ const pool = require("../Model/dbPool.js");
 const buscarAsientos = async (req, res) => {
   const { idViaje, idOrigen, idDestino } = req.params;
 
-  const sqlQuery =
-    `
+  const sqlQuery = `
     SELECT
       asiento 
     FROM
@@ -14,27 +13,26 @@ const buscarAsientos = async (req, res) => {
       O.IdViaje = ${idViaje} and
       miMin(${idOrigen}, O.ParadaOrigen) <= miMax(${idDestino}, O.ParadaDestino) and
       miMin(${idDestino}, O.ParadaDestino) <= miMax(${idOrigen}, O.ParadaOrigen);
-    `
+    `;
 
   try {
-    const [rows, cols] = await pool
-      .promise()
-      .query(sqlQuery);
-    for (let i = 1; i <= 24; i++) { // Llenar estado de asientos
+    const [rows, cols] = await pool.promise().query(sqlQuery);
+    for (let i = 1; i <= 24; i++) {
+      // Llenar estado de asientos
       if (!rows[i - 1]) {
         rows[i - 1] = {
-          "asiento": i,
-          "estado": "libre"
+          asiento: i,
+          estado: "libre",
         };
       } else {
-        rows[i - 1].estado = "ocupado"
+        rows[i - 1].estado = "ocupado";
       }
     }
     return res
       .status(200)
       .send({ success: true, message: "Asientos buscados con exito", rows });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return res
       .status(500)
       .send({ success: false, message: "Error al buscar asientos" });
@@ -43,7 +41,7 @@ const buscarAsientos = async (req, res) => {
 
 const buscarViajes = async (req, res) => {
   const { idOrigen, idDestino, fecha } = req.params;
-  console.log(idOrigen, idDestino, fecha)
+  console.log(idOrigen, idDestino, fecha);
   if (idOrigen === idDestino) {
     return res.status(400).send({
       success: "false",
@@ -58,8 +56,7 @@ const buscarViajes = async (req, res) => {
   }
 
   try {
-    const sqlQuery =
-      `
+    const sqlQuery = `
       SELECT
           p1.idViaje AS id_viaje,
           A.marca AS marca_autobus,
@@ -75,9 +72,7 @@ const buscarViajes = async (req, res) => {
           date(P1.fechaEstimadaLlegada) = '${fecha}' AND
           P1.idEstacion = ${idOrigen} AND 
           P2.idEstacion = ${idDestino};`;
-    const [rows, cols] = await pool
-      .promise()
-      .query(sqlQuery);
+    const [rows, cols] = await pool.promise().query(sqlQuery);
     return res
       .status(200)
       .send({ success: true, message: "Viajes buscados con exito", rows });
@@ -90,8 +85,7 @@ const buscarViajes = async (req, res) => {
 
 const buscarEstaciones = async (_req, res) => {
   try {
-    const sqlQuery =
-      `SELECT 
+    const sqlQuery = `SELECT 
           EN.ID AS estacion_id, 
           EN.nombre AS nombre_estacion, 
           C.nombre AS nombre_ciudad, 
@@ -105,7 +99,7 @@ const buscarEstaciones = async (_req, res) => {
     res.status(200).send({
       success: true,
       message: "Estaciones encontradas con exito",
-      rows
+      rows,
     });
   } catch (e) {
     res
@@ -117,8 +111,7 @@ const buscarEstaciones = async (_req, res) => {
 const buscarNombreEstacion = async (req, res) => {
   const id = req.params.id;
   try {
-    const sqlQuery =
-      `SELECT 
+    const sqlQuery = `SELECT 
           EN.ID AS estacion_id, 
           EN.nombre AS nombre_estacion, 
           C.nombre AS nombre_ciudad, 
@@ -132,7 +125,7 @@ const buscarNombreEstacion = async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Estaciones encontradas con exito",
-      rows
+      rows,
     });
   } catch (e) {
     res
@@ -145,8 +138,7 @@ const buscarViajesCompletados = async (req, res) => {
   const { idUsuario } = req.params;
 
   try {
-    const sqlQuery =
-      `
+    const sqlQuery = `
       SELECT
           p1.idViaje AS id_viaje,
           A.marca AS marca_autobus,
@@ -162,9 +154,7 @@ const buscarViajesCompletados = async (req, res) => {
           INNER JOIN Usuario U on O.IdUsuario = U.ID
       WHERE
           U.ID = ${idUsuario};`;
-    const [rows, cols] = await pool
-      .promise()
-      .query(sqlQuery);
+    const [rows, cols] = await pool.promise().query(sqlQuery);
     return res
       .status(200)
       .send({ success: true, message: "Viajes buscados con exito", rows });
@@ -173,14 +163,13 @@ const buscarViajesCompletados = async (req, res) => {
       .status(500)
       .send({ success: false, message: "Error al buscar viajes" });
   }
-}
+};
 
 const buscarViajesPendientes = async (req, res) => {
   const { idUsuario } = req.params;
 
   try {
-    const sqlQuery =
-      `
+    const sqlQuery = `
       SELECT
           p1.idViaje AS id_viaje,
           A.marca AS marca_autobus,
@@ -196,9 +185,7 @@ const buscarViajesPendientes = async (req, res) => {
           INNER JOIN Usuario U on O.IdUsuario = U.ID
       WHERE
           U.ID = ${idUsuario} AND HOUR(P1.fechaEstimadaLlegada) > 9 ORDER BY P2.idViaje;`;
-    const [rows, cols] = await pool
-      .promise()
-      .query(sqlQuery);
+    const [rows, cols] = await pool.promise().query(sqlQuery);
     return res
       .status(200)
       .send({ success: true, message: "Viajes buscados con exito", rows });
@@ -207,8 +194,7 @@ const buscarViajesPendientes = async (req, res) => {
       .status(500)
       .send({ success: false, message: "Error al buscar viajes" });
   }
-}
-
+};
 
 module.exports = {
   buscarAsientos,
@@ -216,5 +202,5 @@ module.exports = {
   buscarEstaciones,
   buscarNombreEstacion,
   buscarViajesCompletados,
-  buscarViajesPendientes
+  buscarViajesPendientes,
 };

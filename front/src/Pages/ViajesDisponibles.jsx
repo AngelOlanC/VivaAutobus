@@ -30,7 +30,7 @@ const ViajesDisponibles = () => {
           Authorization: token,
         },
       });
-      const data = response.data; 
+      const data = response.data;
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
       }
@@ -108,9 +108,9 @@ const ViajesDisponibles = () => {
         {viajes.map((viaje, index) => (
           <ViajesDisponiblesCards
             key={index}
-            idViaje = {viaje.id_viaje}
-            origen = {viaje.estacion_origen}
-            destino = {viaje.estacion_destino}
+            idViaje={viaje.id_viaje}
+            origen={viaje.estacion_origen}
+            destino={viaje.estacion_destino}
             marca={viaje.marca_autobus}
             horallegada={viaje.hora_estimada_llegada}
             escalas={viaje.numero_escalas}
