@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useUser } from "../Components/UserContext";
 import { useNavigate } from "react-router-dom";
 
+import "../Styles/Perfil.css";
+import imagen from "../Images/perfil.png";
+
 const Perfil = () => {
   const { user, loading } = useUser();
   const navigate = useNavigate();
@@ -16,11 +19,37 @@ const Perfil = () => {
       navigate("/login");
     }
   }, [user, loading]);
+
+
+
   return (
     <>
-      <div>{user?.nombreUsuario}</div>
-      <div>{user?.nombres}</div>
-      <div>{user?.apellidos}</div>
+      <div className="Cuerpo-Flex-Perfil">
+        <h1 className="Etiqueta-Cuerpo-Perfil">Perfil</h1>
+        <div className="Cuadro-Central-Perfil">
+          <div className="Cuadro-Imagen">
+            <img src={imagen} alt="imagen" className="Imagen-Perfil" />
+            <div className="Nombre-Usuario">
+              <label htmlFor="?1" className="Etiqueta-Nombre-Usuario"> Nombre de usuario: </label>
+              {user?.nombreUsuario}
+              <div className="Nombre-Personal-Usuario">
+                <label htmlFor="?2" className="Etiqueta-Nombre-Personal">Nombre: </label>
+                {user?.nombres}
+              </div>
+              <div className="Apellidos-Personal-Usuario">
+                <label htmlFor="?3" className="Etiqueta-Apellidos-Personal">Apellidos: </label>
+                {user?.apellidos}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div className="Cuadro-Botones-Viaje">
+          <button className="Boton-Viajes-Perfil">Viajes Completados</button>
+          <button className="Boton-Finalizados-Perfil">Viajes Pendientes</button>
+
+        </div>
+      </div>
     </>
   );
 };
