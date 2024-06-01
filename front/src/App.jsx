@@ -8,6 +8,7 @@ import Pago from "./Pages/Pago";
 import ViajesDisponibles from "./Pages/ViajesDisponibles";
 import ViajesPendientes from "./Pages/ViajesPendientes";
 import ViajesCompletados from "./Pages/ViajesCompletados";
+import AsientoDisponible from "./Pages/AsientoDisponible";
 import "./input.css";
 import { UserProvider } from "./Components/UserContext";
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/viajesDisponibles" element={<ViajesDisponibles />} />
         <Route path="/viajesCompletados" element={<ViajesCompletados />} />
         <Route path="/viajesPendientes" element={<ViajesPendientes />} />
+        <Route path="/asientoDisponible" element={<AsientoDisponible />} />
       </Routes>
     </UserProvider>
   );
