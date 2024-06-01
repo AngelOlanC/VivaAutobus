@@ -187,7 +187,7 @@ const buscarViajesPendientes = async (req, res) => {
           p1.idViaje AS id_viaje,
           A.marca AS marca_autobus,
           hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
-          (P2.numParada - P1.numParada - 1) AS numero_escalas,
+          (P2.numParada - P1.numParada ) AS numero_escalas,
           hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
       FROM
           Parada P1
@@ -197,7 +197,7 @@ const buscarViajesPendientes = async (req, res) => {
           INNER JOIN Orden O on P1.idViaje = O.IdViaje
           INNER JOIN Usuario U on O.IdUsuario = U.ID
       WHERE
-          U.ID = ${idUsuario} ORDER BY P2.idViaje;`;
+          U.ID = ${idUsuario} AND HOUR(P1.fechaEstimadaLlegada) > 9 ORDER BY P2.idViaje;`;
     const [rows, cols] = await pool
       .promise()
       .query(sqlQuery);
