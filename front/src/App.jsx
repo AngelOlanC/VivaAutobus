@@ -27,7 +27,6 @@ const App = () => {
         <Route path="/viajesDisponibles" element={<ViajesDisponibles />} />
         <Route path="/viajesCompletados" element={<ViajesCompletados />} />
         <Route path="/viajesPendientes" element={<ViajesPendientes />} />
-        <Route path="/asientoDisponible" element={<AsientoDisponible />} />
       </Routes>
     </UserProvider>
   );

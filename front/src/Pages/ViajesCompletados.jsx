@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
-import ViajesCards from "../Components/ViajesCards";
+import ViajesCards from "../Components/ViajesDisponiblesCards";
 import axios from "axios";
 
 const URL_ViajesCompletados = "api/buscar/viajesCompletos";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
-import ViajesCards from "../Components/ViajesCards";
+import ViajesDisponiblesCards from "../Components/ViajesDisponiblesCards";
 import axios from "axios";
 
 const URL_ViajesDisponibles = "api/buscar/viajes";
@@ -30,7 +30,8 @@ const ViajesDisponibles = () => {
           Authorization: token,
         },
       });
-      const data = response.data;
+      console.log(response)
+      const data = response.data; 
       console.log(data);
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
@@ -106,7 +107,7 @@ const ViajesDisponibles = () => {
       <h2 className="text-center text-2xl mt-4">{NombreDestino}</h2>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
         {viajes.map((viaje, index) => (
-          <ViajesCards
+          <ViajesDisponiblesCards
             key={index}
             marca={viaje.marca_autobus}
             horallegada={viaje.hora_estimada_llegada}

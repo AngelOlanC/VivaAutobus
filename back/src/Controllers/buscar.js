@@ -43,7 +43,7 @@ const buscarAsientos = async (req, res) => {
 
 const buscarViajes = async (req, res) => {
   const { idOrigen, idDestino, fecha } = req.params;
-
+  console.log(idOrigen, idDestino, fecha)
   if (idOrigen === idDestino) {
     return res.status(400).send({
       success: "false",
@@ -72,7 +72,7 @@ const buscarViajes = async (req, res) => {
           INNER JOIN Viaje V on P1.idViaje = V.ID
           INNER JOIN Autobus A on V.IdAutobus = A.ID
       WHERE
-          date(P1.fechaEstimadaLlegada) >= '${fecha}' AND
+          date(P1.fechaEstimadaLlegada) = '${fecha}' AND
           P1.idEstacion = ${idOrigen} AND 
           P2.idEstacion = ${idDestino};`;
     const [rows, cols] = await pool
@@ -116,7 +116,6 @@ const buscarEstaciones = async (_req, res) => {
 
 const buscarNombreEstacion = async (req, res) => {
   const id = req.params.id;
-  console.log(id)
   try {
     const sqlQuery =
       `SELECT 
@@ -129,7 +128,6 @@ const buscarNombreEstacion = async (req, res) => {
           INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
           INNER JOIN Estado E on E.id = C.IdEstado
       WHERE EN.ID = ${id};`;
-    console.log(sqlQuery)
     const [rows] = await pool.promise().query(sqlQuery);
     res.status(200).send({
       success: true,
