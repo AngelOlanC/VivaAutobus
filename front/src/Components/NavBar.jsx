@@ -36,7 +36,8 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <NavLink to={"/viajar"} className="NavViajar">Viajar
+              <NavLink to={"/viajar"} className="NavViajar">
+                Viajar
               </NavLink>
               <NavLink to={"/perfil"} className="NavPerfil">
                 Perfil
