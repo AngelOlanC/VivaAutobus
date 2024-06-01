@@ -1,6 +1,6 @@
-const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) => {
+const ViajesDisponiblesCards = ({ idViaje, marca, horallegada, escalas, tiempoestimado, onClick }) => {
   const handleClick = () => {
-    onClick({ origen, destino, hora });
+    onClick({ idViaje });
   };
   return (
     <div
@@ -36,4 +36,4 @@ const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) =
   );
 };
 
-export default ViajesCards;
+export default ViajesDisponiblesCards;

@@ -30,9 +30,7 @@ const ViajesDisponibles = () => {
           Authorization: token,
         },
       });
-      console.log(response)
       const data = response.data; 
-      console.log(data);
       if (Array.isArray(data.rows)) {
         setViajes(data.rows);
       }
@@ -97,7 +95,8 @@ const ViajesDisponibles = () => {
 
   const handleTarjetaClick = (datosTarjeta) => {
     setTarjetaSeleccionada(datosTarjeta);
-    navigate("/asientoDisponible");
+    const { idViaje } = datosTarjeta;
+    navigate(`/asientos/${idViaje}/${origen}/${destino}`);
   };
 
   return (
@@ -109,6 +108,9 @@ const ViajesDisponibles = () => {
         {viajes.map((viaje, index) => (
           <ViajesDisponiblesCards
             key={index}
+            idViaje = {viaje.id_viaje}
+            origen = {viaje.estacion_origen}
+            destino = {viaje.estacion_destino}
             marca={viaje.marca_autobus}
             horallegada={viaje.hora_estimada_llegada}
             escalas={viaje.numero_escalas}

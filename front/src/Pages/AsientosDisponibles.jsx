@@ -11,7 +11,7 @@ const AsientosDisponibles = () => {
     const { idViaje, idOrigen, idDestino } = useParams();
     const { user, loading } = useUser();
     const [cargando, setCargando] = useState(true);
-
+    console.log(idViaje, idOrigen, idDestino)
     const asientosURI = "api/buscar/asientos/" + idViaje + "/" + idOrigen + "/" + idDestino;
     const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const AsientosDisponibles = () => {
         if (asientoSeleccionado) {
             console.log(`Asiento seleccionado: ${asientoSeleccionado}`);
         } else {
-            console.log("No se ha seleccionado ningÃºn asiento");
+            console.log("No se ha seleccionado ningun asiento");
         }
     };
 

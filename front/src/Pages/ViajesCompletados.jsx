@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
-import ViajesCards from "../Components/ViajesDisponiblesCards";
+import ViajesDisponiblesCards from "../Components/ViajesDisponiblesCards";
 import axios from "axios";
 
 const URL_ViajesCompletados = "api/buscar/viajesCompletos";
@@ -51,7 +51,7 @@ const ViajesCompletados = () => {
             <h1 className="text-center text-4xl">Viajes Completados</h1>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
                 {viajes.map((viaje, index) => (
-                    <ViajesCards
+                    <ViajesDisponiblesCards
                         key={index}
                         marca={viaje.marca_autobus}
                         horallegada={viaje.hora_estimada_llegada}
