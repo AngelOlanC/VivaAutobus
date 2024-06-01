@@ -2,6 +2,7 @@ const pool = require("../Model/dbPool.js");
 
 const buscarAsientos = async (req, res) => {
   const { idViaje, idOrigen, idDestino } = req.params;
+  
   const sqlQuery =
     `
     SELECT
