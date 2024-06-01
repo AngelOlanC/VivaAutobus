@@ -4,16 +4,46 @@ import { useUser } from "../Components/UserContext";
 import ViajesCards from "../Components/ViajesCards";
 import axios from "axios";
 
-const URL_ViajesCompletados = "api/buscar/viajes";
+const URL_ViajesCompletados = "api/buscar/viajesCompletos";
 
 const ViajesCompletados = () => {
     const { user, loading } = useUser();
     const navigate = useNavigate();
-
-    const location = useLocation();
     const [viajes, setViajes] = useState([]);
-    const [NombreOrigen, setNombreOrigen] = useState("");
-    const [NombreDestino, setNombreDestino] = useState("");
+
+
+    const ObtenerViajesCompletados = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            const idUsuario = user?.id;
+            console.log("usuario: ", idUsuario);
+            const response = await axios.get(`${URL_ViajesCompletados}/${idUsuario}`, {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            const data = response.data;
+            console.log(data);
+            if (Array.isArray(data.rows)) {
+                setViajes(data.rows);
+            }
+        } catch (error) {
+            alert("Error al obtener los viajes", error);
+        }
+    }
+
+    useEffect(() => {
+        console.log(loading, user);
+        if (loading) {
+            return;
+        }
+        if (!loading && !user) {
+            navigate("/login");
+            alert("Debes iniciar sesión para acceder a esta página");
+            return;
+        }
+        ObtenerViajesCompletados();
+    }, [user, loading]);
 
 
     return (
@@ -27,7 +57,6 @@ const ViajesCompletados = () => {
                         horallegada={viaje.hora_estimada_llegada}
                         escalas={viaje.numero_escalas}
                         tiempoestimado={viaje.horas_estimadas_viaje}
-                        onClick={handleTarjetaClick}
                     />
                 ))}
             </div>
