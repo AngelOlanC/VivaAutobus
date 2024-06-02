@@ -55,12 +55,14 @@ CREATE TABLE IF NOT EXISTS Parada(
     INDEX i1 (idEstacion, fechaEstimadaLlegada)
 );
 
+drop table Orden;
+drop table Boleto;
 CREATE TABLE IF NOT EXISTS Orden(
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     idViaje INT,
     idUsuario INT,
-    ParadaOrigen INT,
-    ParadaDestino INT,
+    paradaOrigen INT,
+    paradaDestino INT,
     metodoPago VARCHAR(10),
     costo INT,
     fechaExpiracion DATETIME,
@@ -73,13 +75,9 @@ CREATE TABLE IF NOT EXISTS Orden(
 );
 
 CREATE TABLE IF NOT EXISTS Boleto(
-	idOrden INT,
+	idOrden INT REFERENCES Orden(id),
     asiento INT,
 	nombre VARCHAR(40),
-    apellidoPaterno VARCHAR(40),
-    apellidoMaterno VARCHAR(40),
-    email VARCHAR(40),
-    fechaNacimiento datetime,
-    CONSTRAINT PRIMARY KEY (idOrden, asiento),
-    CONSTRAINT FOREIGN KEY (idOrden) REFERENCES Orden(id)
+    apellidos VARCHAR(40),
+    CONSTRAINT PRIMARY KEY (idOrden, asiento)
 );

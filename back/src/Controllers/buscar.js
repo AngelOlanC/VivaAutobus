@@ -1,8 +1,9 @@
 const pool = require("../Model/dbPool.js");
 
 const buscarAsientos = async (req, res) => {
+  console.log("A")
   const { idViaje, idOrigen, idDestino } = req.params;
-
+  console.log(idViaje, idOrigen, idDestino)
   const sqlQuery =
     `
     SELECT
@@ -43,7 +44,6 @@ const buscarAsientos = async (req, res) => {
 
 const buscarViajes = async (req, res) => {
   const { idOrigen, idDestino, fecha } = req.params;
-  console.log(idOrigen, idDestino, fecha)
   if (idOrigen === idDestino) {
     return res.status(400).send({
       success: "false",

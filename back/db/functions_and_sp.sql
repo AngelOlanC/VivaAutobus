@@ -1,3 +1,5 @@
+SET GLOBAL log_bin_trust_function_creators = 1;
+
 DELIMITER $$
 CREATE FUNCTION miMin(a INT, b INT) RETURNS INT
 begin
@@ -5,8 +7,6 @@ begin
 end$$
 
 DELIMITER ;
-
-select miMax(5, 6);
 
 DELIMITER $$
 CREATE FUNCTION miMax(a INT, b INT) RETURNS INT
@@ -33,8 +33,6 @@ DO
     CALL eliminarBoletosVencidos();
 DELIMITER ;
 
-# FUNCIONES Y PROCEDIMIENTOS ALMACENADOS
-SET GLOBAL log_bin_trust_function_creators = 1;
 
 DELIMITER $$
 # FALTA HACERLA MEJOR, TAL VEZ UN CASE WHEN POR CADA POSIBLE CIUDAD DE ORIGEN Y CIUDAD DE DESTINO

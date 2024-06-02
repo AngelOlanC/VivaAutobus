@@ -1,4 +1,3 @@
-// EMPIEZA PARTE DE PAYPAL
 const fetch = require('node-fetch');
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT } = process.env;
@@ -39,6 +38,7 @@ const crearOrden = async () => {
     intent: "CAPTURE",
     purchase_units: [
       {
+        reference_id: 2,  
         amount: {
           currency_code: "MXN",
           value: monto,

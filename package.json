@@ -8,9 +8,15 @@
     "front"
   ],
   "scripts": {
+    "server": "cd back && npm run server",
+    "client": "cd front && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

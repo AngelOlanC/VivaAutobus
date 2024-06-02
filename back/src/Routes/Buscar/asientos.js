@@ -1,5 +1,6 @@
 const express = require('express')
 
+
 const { buscarAsientos } = require('./../../Controllers/buscar')
 
 const router = express.Router()
