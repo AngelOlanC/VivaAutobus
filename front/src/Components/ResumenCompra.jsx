@@ -1,11 +1,8 @@
-const ViajesDisponiblesCards = ({ idViaje, marca, horallegada, escalas, tiempoestimado, onClick, id_num_parada_origen, id_num_parada_destino }) => {
-  const handleClick = () => {
-    onClick({ idViaje, id_num_parada_origen, id_num_parada_destino });
-  };
+const ResumenCompra = ({ idViaje, marca, horallegada, escalas, tiempoestimado, onClick, id_num_parada_origen, id_num_parada_destino }) => {
   return (
     <div
       className="flex justify-center items-center px-4 py-8"
-      onClick={handleClick}
+      onClick={onClick}
     >
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-blue-500 p-4">
@@ -36,4 +33,4 @@ const ViajesDisponiblesCards = ({ idViaje, marca, horallegada, escalas, tiempoes
   );
 };
 
-export default ViajesDisponiblesCards;
+export default ResumenCompra;

@@ -8,7 +8,6 @@ dotenv.config()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-
 const { validarJWT } = require('./middlewares/authentication')
 
 const routerBuscar = require('./Routes/Buscar')
@@ -16,7 +15,7 @@ const routerOrdenes = require('./Routes/Ordenar')
 const routerUsuario = require('./Routes/Usuario')
 
 app.use('/buscar', validarJWT, routerBuscar)
-app.use('/ordenes', routerOrdenes)
+app.use('/ordenes', validarJWT, routerOrdenes)
 app.use('/usuario', routerUsuario)
 
 const port = process.env.SERVER_PORT ?? 3000

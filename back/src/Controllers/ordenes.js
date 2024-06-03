@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const pool = require("../Model/dbPool.js");
+const { getUser } = require('./usuario.js')
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
@@ -26,12 +28,7 @@ const generarTokenAcceso = async () => {
   }
 };
 
-const crearOrden = async () => {
-  // use the cart information passed from the front-end to calculate the purchase unit details
-
-  // const monto = cart.reduce((prev, curr) => prev + curr.costo);
-  const monto = 100
-
+const crearOrden = async (monto) => {
   const accessToken = await generarTokenAcceso();
   const url = `${base}/v2/checkout/orders`;
   const payload = {
@@ -89,17 +86,107 @@ async function handleResponse(response) {
 
 // TERMINA PARTE DE PAYPAL
 
-const actualizarBd = async (req, res) => {
-  const { username, userId } = req.headers;
-  console.log(username, userId)
+const apartarOrden = async (userId, costo, idViaje, idOrigen, idDestino, asiento) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        return reject(err);
+      }
+      return connection.beginTransaction(err => {
+        if (err) {
+          connection.release();
+          return reject("Error al crear la transaccion");
+        }
+        const sqlCrearOrden =
+        `
+        INSERT INTO Orden(idViaje, idUsuario, paradaOrigen, paradaDestino, metodoPago, costo, fechaExpiracion) VALUES
+          (${idViaje}, ${userId}, ${idOrigen}, ${idDestino}, 'tarjeta', ${costo}, DATE_ADD(NOW(), INTERVAL 20 MINUTE));
+        `;
+        return connection.query(sqlCrearOrden, [], (err, res) => {
+          if (err) {
+            return connection.rollback(() => {
+              connection.release();
+              return reject("Error al crear la orden", err);
+            });
+          }
+          const idOrden = res.insertId;
+          const sqlGetInformacionUsuario =
+            `
+            SELECT 
+              nombres,
+              apellidos
+            FROM
+              Usuario
+            WHERE
+              id = ${userId};  
+            `
+          return connection.query(sqlGetInformacionUsuario, [], (err, res) => {
+            if (err) {
+              return connection.rollback(() => {
+                connection.release();
+                return reject("Error al obtener la informacion del usuario", err);
+              });
+            }
+            const { nombres, apellidos } = res[0];
+        
+            const sqlCrearBoleto =
+              `
+              INSERT INTO Boleto(idOrden, asiento, nombres, apellidos) VALUES
+                (${idOrden}, ${asiento}, '${nombres}', '${apellidos}')
+              `;
+            return connection.execute(sqlCrearBoleto, [], (err, res) => {
+              if (err) {
+                return connection.rollback(() => {
+                  connection.release();
+                  return reject("Error al crear el boleto", err);
+                });
+              }
+              return connection.commit((err) => {
+                if (err) {
+                    return connection.rollback(() => {
+                        connection.release();
+                        return reject("Commit failed");
+                    });
+                }
+                connection.release();
+                return resolve(idOrden);
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+}
 
+const confirmarOrden = async (req, res) => {
+  const { username, userId } = req.headers;
+  const { idOrden } = req.params;
+
+  const sql =
   `
-  INSERT
+  UPDATE Orden
+  SET fechaExpiracion = '20490101010101'
+  WHERE id = ${idOrden};
   `
+  try {
+    await pool.promise().query(sql);
+
+    return res.status(200).json({
+      success: "true",
+      message: "Orden confirmada"
+    })
+  } catch(e) {
+    return res.status(500).json({
+      success: "false",
+      error: "Server error"
+    })
+  }
 }
 
 module.exports = {
   crearOrden,
   capturarOrden,
-  actualizarBd
+  apartarOrden,
+  confirmarOrden
 }

@@ -103,7 +103,7 @@ VALUES
   (31, 'Estacion de Autobuses Central'),
   (32, 'Terminal del Este');
 
-INSERT INTO Conductor (nombre, email, telefono) VALUES
+INSERT INTO Conductor (nombres, email, telefono) VALUES
 	('Joaquin Castro Sarmiento', 'genji@JGL.com', '6672607022'),
     ('Gilberto Montoya Lopez', 'gilberto@SDLG.com', '6670702269');
 
@@ -171,10 +171,12 @@ INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
 	(1, 5, 12, 20240604100000),
 	(1, 6, 20, 20240604180000);
     
+select * from orden;
+select * from boleto;
 INSERT INTO Orden(idViaje, idUsuario, paradaOrigen, paradaDestino, metodoPago, costo, fechaExpiracion) VALUES
-	(1, 2, 5, 6, "Tarjeta", 1000, 20240808);
-INSERT INTO Boleto(idOrden, asiento, nombre, apellidos) VALUES
-	();
+	(1, 1, 3, 5, "Tarjeta", 1000, 20240808);
+INSERT INTO Boleto(idOrden, asiento, nombres, apellidos) VALUES
+	(1, 1, "Juan", "Perez");
 
 INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
 	(2, 1, 8, 20240603080000),

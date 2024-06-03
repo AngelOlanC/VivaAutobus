@@ -13,9 +13,8 @@ const AsientosDisponibles = () => {
   const { idViaje, idOrigen, idDestino } = useParams();
   const { user, loading } = useUser();
   const [cargando, setCargando] = useState(true);
-  console.log(idViaje, idOrigen, idDestino);
   const asientosURI =
-    "/api/buscar/asientos/" + idViaje + "/" + idOrigen + "/" + idDestino;
+    `/api/buscar/asientos/${idViaje}/${idOrigen}/${idDestino}`;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +31,7 @@ const AsientosDisponibles = () => {
           },
         });
         setAsientoDisponible([]);
-        res.data.rows.forEach((asiento) => {
+        res.data.asientos.forEach((asiento) => {
           setAsientoDisponible((prev) => [
             ...prev,
             asiento.estado == "libre" ? true : false,
@@ -56,10 +55,24 @@ const AsientosDisponibles = () => {
     setAsientoSeleccionado(asiento);
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (asientoSeleccionado) {
-      console.log(`Asiento seleccionado: ${asientoSeleccionado}`);
-      navigate("/pago");
+      const URL_API_APARTAR = `/api/ordenes/apartar/${idViaje}/${idOrigen}/${idDestino}/${asientoSeleccionado}`;
+      console.log(URL_API_APARTAR);
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const res = await axios({
+        method:'POST',
+        url:URL_API_APARTAR,
+        headers:{
+          Authorization: token,
+          costo: 200,
+        }
+      });
+      const { idOrden } =  res.data
+      console.log(idOrden)
+      const URL_PAGO = `/pago/${idOrden}`;
+      navigate(URL_PAGO);
     } else {
       setAsientoNoSeleccionadoError(true);
       return;

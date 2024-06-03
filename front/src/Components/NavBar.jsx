@@ -4,7 +4,6 @@ import { useUser } from "./UserContext";
 import { useEffect, useState } from "react";
 
 const NavBar = () => {
-
   const { user, loading, setUser } = useUser();
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();

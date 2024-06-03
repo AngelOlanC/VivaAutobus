@@ -68,13 +68,9 @@ const Viajar = () => {
       return acc + item;
     }, "");
 
-    navigate("/ViajesDisponibles", {
+    return navigate("/ViajesDisponibles", {
       state: { origen, destino, hora: fecha },
     });
-
-    console.log("Origen: ", origen);
-    console.log("Destino: ", destino);
-    console.log("Fecha: ", fecha);
   };
 
   return (

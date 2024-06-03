@@ -95,8 +95,9 @@ const ViajesDisponibles = () => {
 
   const handleTarjetaClick = (datosTarjeta) => {
     setTarjetaSeleccionada(datosTarjeta);
-    const { idViaje } = datosTarjeta;
-    navigate(`/asientos/${idViaje}/${origen}/${destino}`);
+    const { idViaje, id_num_parada_origen, id_num_parada_destino } = datosTarjeta;
+    console.log(idViaje, id_num_parada_origen, id_num_parada_destino);
+    return navigate(`/asientos/${idViaje}/${id_num_parada_origen}/${id_num_parada_destino}`);
   };
 
   return (
@@ -116,20 +117,11 @@ const ViajesDisponibles = () => {
             escalas={viaje.numero_escalas}
             tiempoestimado={viaje.horas_estimadas_viaje}
             onClick={handleTarjetaClick}
+            id_num_parada_origen = {viaje.id_num_parada_origen}
+            id_num_parada_destino = {viaje.id_num_parada_destino}
           />
         ))}
       </div>
-      {tarjetaSeleccionada && (
-        <div className="grid grid-cols-1 justify-items-center items-center align-middle">
-          <h2 className="text-2xl mt-8">Detalles del viaje seleccionado:</h2>
-          <p className="text-lg mt-4">Origen: {tarjetaSeleccionada.origen}</p>
-          <p className="text-lg">Destino: {tarjetaSeleccionada.destino}</p>
-          <p className="text-lg">Hora: {tarjetaSeleccionada.hora}</p>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-            Ver asientos
-          </button>
-        </div>
-      )}
     </div>
   );
 };

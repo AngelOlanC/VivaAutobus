@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../Components/UserContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const URI_BASE = "api/ordenes";
 
 const Pago = () => {
+  const { idOrden } = useParams();
   const { user, loading } = useUser();
   const navigate = useNavigate();
 
+  console.log(idOrden);
+  // TODO: Endpoint para obtener un resumen de la orden
+
   useEffect(() => {
-    console.log(loading, user);
     if (loading) {
         return;
     }
@@ -19,7 +22,6 @@ const Pago = () => {
         alert("Debes iniciar sesión para acceder a esta página");
         return;
     }
-    ObtenerViajesCompletados();
   }, [user, loading]);
 
   // TODO:
@@ -29,21 +31,26 @@ const Pago = () => {
   const [message, setMessage] = useState("");
 
   return (
-    <div className="App">
-      <PayPalScriptProvider options={paypalInitialOptions}>
-        <PayPalButtons
-          style={{
-            shape: "rect",
-            layout: "vertical",
-            color: "gold",
-            label: "paypal",
-          }}
-          createOrder = { crearOrden }
-          onApprove = { capturarOrden }
-        />
-      </PayPalScriptProvider>
-      <Message content={message} />
-    </div>
+    <>
+      <div className="h-screen flex items-center justify-center">
+        <p>Resumen de la compra</p>
+      </div>
+      <div className="h-screen flex items-center justify-center">
+        <PayPalScriptProvider options={paypalInitialOptions}>
+          <PayPalButtons
+            style={{
+              shape: "rect",
+              layout: "vertical",
+              color: "gold",
+              label: "paypal",
+            }}
+            createOrder = { crearOrden }
+            onApprove = { capturarOrden }
+            />
+        </PayPalScriptProvider>
+        <Message content={message} />
+      </div>
+    </>
   );
 };
 

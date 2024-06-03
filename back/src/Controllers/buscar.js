@@ -1,9 +1,7 @@
 const pool = require("../Model/dbPool.js");
 
 const buscarAsientos = async (req, res) => {
-  console.log("A")
   const { idViaje, idOrigen, idDestino } = req.params;
-  console.log(idViaje, idOrigen, idDestino)
   const sqlQuery =
     `
     SELECT
@@ -13,26 +11,27 @@ const buscarAsientos = async (req, res) => {
       INNER JOIN Orden O on B.idOrden = O.id
     WHERE
       O.IdViaje = ${idViaje} and
-      miMin(${idOrigen}, O.ParadaOrigen) <= miMax(${idDestino}, O.ParadaDestino) and
-      miMin(${idDestino}, O.ParadaDestino) <= miMax(${idOrigen}, O.ParadaOrigen);
-    `;
+      miMax(${idOrigen}, O.ParadaOrigen) <= miMin(${idDestino}, O.ParadaDestino);`;
 
   try {
     const [rows, cols] = await pool.promise().query(sqlQuery);
+    const asientos = Array(24);
+    rows.forEach(val => asientos[val.asiento - 1] = {
+      asiento : val.asiento,
+      estado: "ocupado"
+    });
     for (let i = 1; i <= 24; i++) {
       // Llenar estado de asientos
-      if (!rows[i - 1]) {
-        rows[i - 1] = {
+      if (!asientos[i - 1]) {
+        asientos[i - 1] = {
           asiento: i,
           estado: "libre",
         };
-      } else {
-        rows[i - 1].estado = "ocupado";
       }
     }
     return res
       .status(200)
-      .send({ success: true, message: "Asientos buscados con exito", rows });
+      .send({ success: true, message: "Asientos buscados con exito", asientos });
   } catch (e) {
     console.log(e);
     return res
@@ -64,8 +63,10 @@ const buscarViajes = async (req, res) => {
           A.marca AS marca_autobus,
           hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
           (P2.numParada - P1.numParada - 1) AS numero_escalas,
-          hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
-      FROM
+          hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje,
+          P1.numParada AS id_num_parada_origen,
+          P2.numParada AS id_num_parada_destino
+    FROM
           Parada P1
           INNER JOIN Parada P2 on P1.idViaje = P2.idViaje AND P1.numParada < P2.numParada
           INNER JOIN Viaje V on P1.idViaje = V.ID
