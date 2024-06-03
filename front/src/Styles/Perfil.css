@@ -1,140 +1,140 @@
 .Cuerpo-Flex-Perfil {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .Etiqueta-Cuerpo-Perfil {
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    color: black;
-    margin: 10px;
-    font-family: Georgia;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
+  margin: 10px;
+  font-family: Georgia;
 }
 
 .Cuadro-Central-Perfil {
-    display: inline-block;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Cuadro-Imagen {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
 }
 
 .Imagen-Perfil {
-    border-radius: 20%;
-    margin: 10px;
-    border-color: black;
-    border-width: 2px;
+  border-radius: 20%;
+  margin: 10px;
+  border-color: black;
+  border-width: 2px;
 }
 
 .Nombre-Usuario {
-    display: flexbox;
-    margin: 30px;
-    font-size: 20px;
-    font-weight: 500;
-    color: black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-
 .Nombre-Personal-Usuario {
-    display: flexbox;
-    font-size: 20px;
-    font-weight: 500;
-    color: black;
-    margin: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flexbox;
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+  margin: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .Apellidos-Personal-Usuario {
-    display: flexbox;
-    font-size: 20px;
-    font-weight: 500;
-    color: black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flexbox;
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .Etiqueta-Nombre-Usuario {
-
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    margin: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  margin: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .Etiqueta-Nombre-Personal {
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .Etiqueta-Apellidos-Personal {
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    margin: 10px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  margin: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 .Boton-Viajes-Perfil {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-    padding: 10px 30px;
-    background-color: #6056e9;
-    font-weight: 500;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 10px 30px;
+  background-color: #6056e9;
+  font-weight: 500;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Boton-Finalizados-Perfil {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-    padding: 10px 30px;
-    background-color: #6056e9;
-    font-weight: 500;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 10px 30px;
+  background-color: #6056e9;
+  font-weight: 500;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .Boton-Viajes-Perfil:hover {
-    background-color: #000000;
-    color: white;
-    transition: 0.5s;
+  background-color: #000000;
+  color: white;
+  transition: 0.5s;
 }
 
 .Boton-Finalizados-Perfil:hover {
-    background-color: #000000;
-    color: white;
-    transition: 0.5s;
+  background-color: #000000;
+  color: white;
+  transition: 0.5s;
 }
 
 .Cuadro-Botones-Viaje {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    padding: 10px 120px;
-    background-color: white;
-    font-weight: 500;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 10px 120px;
+  background-color: white;
+  font-weight: 500;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
