@@ -7,6 +7,7 @@ const base = "https://api-m.sandbox.paypal.com";
 
 const generarTokenAcceso = async () => {
   try {
+    console.log(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
     if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
       throw new Error("MISSING_API_CREDENTIALS");
     }
@@ -101,7 +102,7 @@ const apartarOrden = async (userId, costo, idViaje, idOrigen, idDestino, asiento
         const sqlCrearOrden =
         `
         INSERT INTO Orden(idViaje, idUsuario, paradaOrigen, paradaDestino, metodoPago, costo, fechaExpiracion) VALUES
-          (${idViaje}, ${userId}, ${idOrigen}, ${idDestino}, 'tarjeta', ${costo}, DATE_ADD(NOW(), INTERVAL 20 MINUTE));
+          (${idViaje}, ${userId}, ${idOrigen}, ${idDestino}, 'tarjeta', ${costo}, DATE_ADD(NOW(), INTERVAL 2 MINUTE));
         `;
         return connection.query(sqlCrearOrden, [], (err, res) => {
           if (err) {
@@ -235,10 +236,46 @@ const getResumen = async (req, res) => {
     }
 };
 
+const eliminarOrden = async (req, res) => {
+  console.log("HOLA")
+  const { idOrden } = req.params;
+  const sqlBoleto =
+    `
+    DELETE 
+    FROM
+      Boleto
+    WHERE
+      idOrden = ${idOrden};
+    `
+  try {
+    await pool.promise().execute(sqlBoleto);
+    
+    const sqlOrden =
+      `
+      DELETE
+      FROM
+        Orden
+      WHERE
+        id = ${id};
+      ` 
+    await pool.promise().execute(sqlOrden);
+    return res.status(200).json({
+      success: true
+    });
+  } catch(e) {
+    console.log(e);
+    return res.status(500).json({
+      success: false,
+      message: e
+    })
+  }
+};
+
 module.exports = {
   crearOrden,
   capturarOrden,
   apartarOrden,
   confirmarOrden,
-  getResumen
+  getResumen,
+  eliminarOrden
 }

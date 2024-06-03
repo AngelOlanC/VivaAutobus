@@ -10,7 +10,6 @@ const Perfil = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loading, user);
     if (loading) {
       return;
     }

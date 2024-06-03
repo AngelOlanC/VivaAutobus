@@ -138,74 +138,10 @@ const buscarNombreEstacion = async (req, res) => {
       .send({ success: false, message: "Error al buscar estaciones" });
   }
 };
-  
-const buscarViajesCompletados = async (req, res) => {
-  const { idUsuario } = req.params;
-
-  try {
-    const sqlQuery = `
-      SELECT
-          p1.idViaje AS id_viaje,
-          A.marca AS marca_autobus,
-          hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
-          (P2.numParada - P1.numParada - 1) AS numero_escalas,
-          hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
-      FROM
-          Parada P1
-          INNER JOIN Parada P2 on P1.idViaje = P2.idViaje AND P1.numParada < P2.numParada
-          INNER JOIN Viaje V on P1.idViaje = V.ID
-          INNER JOIN Autobus A on V.IdAutobus = A.ID
-          INNER JOIN Orden O on P1.idViaje = O.IdViaje
-          INNER JOIN Usuario U on O.IdUsuario = U.ID
-      WHERE
-          U.ID = ${idUsuario};`;
-    const [rows, cols] = await pool.promise().query(sqlQuery);
-    return res
-      .status(200)
-      .send({ success: true, message: "Viajes buscados con exito", rows });
-  } catch (e) {
-    return res
-      .status(500)
-      .send({ success: false, message: "Error al buscar viajes" });
-  }
-};
-
-const buscarViajesPendientes = async (req, res) => {
-  const { idUsuario } = req.params;
-
-  try {
-    const sqlQuery = `
-      SELECT
-          p1.idViaje AS id_viaje,
-          A.marca AS marca_autobus,
-          hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
-          (P2.numParada - P1.numParada ) AS numero_escalas,
-          hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje
-      FROM
-          Parada P1
-          INNER JOIN Parada P2 on P1.idViaje = P2.idViaje AND P1.numParada < P2.numParada
-          INNER JOIN Viaje V on P1.idViaje = V.ID
-          INNER JOIN Autobus A on V.IdAutobus = A.ID
-          INNER JOIN Orden O on P1.idViaje = O.IdViaje
-          INNER JOIN Usuario U on O.IdUsuario = U.ID
-      WHERE
-          U.ID = ${idUsuario} AND HOUR(P1.fechaEstimadaLlegada) > 9 ORDER BY P2.idViaje;`;
-    const [rows, cols] = await pool.promise().query(sqlQuery);
-    return res
-      .status(200)
-      .send({ success: true, message: "Viajes buscados con exito", rows });
-  } catch (e) {
-    return res
-      .status(500)
-      .send({ success: false, message: "Error al buscar viajes" });
-  }
-};
 
 module.exports = {
   buscarAsientos,
   buscarViajes,
   buscarEstaciones,
-  buscarNombreEstacion,
-  buscarViajesCompletados,
-  buscarViajesPendientes,
+  buscarNombreEstacion
 };

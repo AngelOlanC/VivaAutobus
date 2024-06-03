@@ -4,13 +4,15 @@ const validarPermisos = require('../../middlewares/orderAuthentication')
 
 const routerApartar = require('./apartar')
 
-const { crearOrden, capturarOrden, confirmarOrden, getResumen } = require('../../Controllers/ordenes')
+const { crearOrden, capturarOrden, confirmarOrden, getResumen, eliminarOrden } = require('../../Controllers/ordenes')
 
 const router = express.Router()
 
 router.use("/apartar", routerApartar);
 
 router.get('/:idOrden', validarPermisos, getResumen)
+
+router.delete("/:idOrden", eliminarOrden)
 
 router.post('/:idOrden', validarPermisos, async (req, res) => {
   const { idOrden } = req.params;

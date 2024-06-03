@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS Usuario(
     apellidos VARCHAR(30),
     CONSTRAINT usuarioUnico UNIQUE(nombreUsuario)
 );
- 
+
 CREATE TABLE IF NOT EXISTS Estado(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(40)

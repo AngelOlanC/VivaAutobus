@@ -115,8 +115,105 @@ const getUser = async (req, res) => {
   }
 }
 
+const buscarMisViajesCompletados = async (req, res) => {
+  const idUsuario = req.headers.userId;
+  const sql = 
+    `
+    SELECT
+      V.id AS idViaje,
+      P1.fechaEstimadaLlegada AS fechaPartida,
+      P2.fechaEstimadaLlegada AS fechaLlegada,
+      CONCAT(C1.nombre, '-', C2.nombre) AS ciudades,
+      (P2.numParada - P1.numParada - 1) AS numeroEscalas,
+      A.clase AS clase,
+      B.asiento AS asiento,
+      O.costo AS precio
+    FROM
+      Orden O
+
+      INNER JOIN Boleto B on O.id = B.idOrden
+      
+      INNER JOIN Parada P1 on O.paradaOrigen = P1.numParada and O.idViaje = P1.idViaje
+      INNER JOIN Estacion E1 on P1.idEstacion = E1.id
+      INNER JOIN Ciudad C1 on E1.idCiudad = C1.id
+      INNER JOIN Estado ED1 on C1.idEstado = ED1.id
+      
+      INNER JOIN Parada P2 on O.paradaDestino = P2.numParada and O.idViaje = P2.idViaje
+      INNER JOIN Estacion E2 on P2.idEstacion = E2.id
+      INNER JOIN Ciudad C2 on E2.idCiudad = C2.id
+      INNER JOIN Estado ED2 on C2.idEstado = ED2.id
+      
+      INNER JOIN Viaje V on P1.idViaje = V.id
+      INNER JOIN Autobus A on V.idAutobus = A.id
+    WHERE
+      O.idUsuario = ${idUsuario} AND
+      NOW() >= P2.fechaEstimadaLlegada AND
+      NOW() < O.fechaExpiracion;
+    `
+  try {
+    const [rows] = await pool.promise().query(sql);
+    return res
+      .status(200)
+      .send({ success: true, message: "Viajes buscados con exito", rows });
+  } catch(e) {
+    return res.status(500).json({
+      error: 'Server error'
+    });
+  }
+};
+
+const buscarMisViajesPendientes = async (req, res) => {
+  const idUsuario = req.headers.userId;
+  const sql = 
+    `
+    SELECT
+      O.id AS idOrden,
+      V.id AS idViaje,
+      P1.fechaEstimadaLlegada AS fechaPartida,
+      P2.fechaEstimadaLlegada AS fechaLlegada,
+      CONCAT(C1.nombre, '-', C2.nombre) AS ciudades,
+      (P2.numParada - P1.numParada - 1) AS numeroEscalas,
+      A.clase AS clase,
+      B.asiento AS asiento,
+      O.costo AS precio
+    FROM
+      Orden O
+
+      INNER JOIN Boleto B on O.id = B.idOrden
+      
+      INNER JOIN Parada P1 on O.paradaOrigen = P1.numParada and O.idViaje = P1.idViaje
+      INNER JOIN Estacion E1 on P1.idEstacion = E1.id
+      INNER JOIN Ciudad C1 on E1.idCiudad = C1.id
+      INNER JOIN Estado ED1 on C1.idEstado = ED1.id
+      
+      INNER JOIN Parada P2 on O.paradaDestino = P2.numParada and O.idViaje = P2.idViaje
+      INNER JOIN Estacion E2 on P2.idEstacion = E2.id
+      INNER JOIN Ciudad C2 on E2.idCiudad = C2.id
+      INNER JOIN Estado ED2 on C2.idEstado = ED2.id
+      
+      INNER JOIN Viaje V on P1.idViaje = V.id
+      INNER JOIN Autobus A on V.idAutobus = A.id
+    WHERE
+      O.idUsuario = ${idUsuario} AND
+      NOW() < P2.fechaEstimadaLlegada AND
+      NOW() < O.fechaExpiracion;
+    `
+  try {
+    const [rows] = await pool.promise().query(sql);
+    return res
+      .status(200)
+      .send({ success: true, message: "Viajes buscados con exito", rows });
+  } catch(e) {
+    return res.status(500).json({
+      error: 'Server error'
+    });
+  }
+};
+
 module.exports = {
   crearUsuario,
   getUser,
-  iniciarSesion
+  iniciarSesion,
+  buscarMisViajesCompletados,
+  buscarMisViajesPendientes
 }

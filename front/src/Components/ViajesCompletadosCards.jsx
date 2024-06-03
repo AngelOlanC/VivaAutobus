@@ -1,34 +1,36 @@
-const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) => {
-  const handleClick = () => {
-    onClick({ origen, destino, hora });
-  };
+const ViajesCompletadosCards = ({ idViaje, fechaPartida, fechaLlegada, ciudades, numeroEscalas, clase, asiento, precio }) => {
   return (
-    <div
-      className="flex justify-center items-center px-4 py-8"
-      onClick={handleClick}
-    >
+    <div className="flex justify-center items-center px-4 py-8">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-blue-500 p-4">
           <h2 className="text-xl text-white font-semibold text-center">
-            Detalles del Viaje
+            {ciudades}
           </h2>
         </div>
         <div className="p-4">
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Marca autobus:</h3>
-            <p className="text-gray-600">{marca}</p>
+            <h3 className="text-gray-900 font-semibold">Fecha partida:</h3>
+            <p className="text-gray-600">{fechaPartida}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Hora de llegada:</h3>
-            <p className="text-gray-600">{horallegada}</p>
+            <h3 className="text-gray-900 font-semibold">Fecha llegada:</h3>
+            <p className="text-gray-600">{fechaLlegada}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Escalas:</h3>
-            <p className="text-gray-600">{escalas}</p>
+            <h3 className="text-gray-900 font-semibold">Escalas realizadas:</h3>
+            <p className="text-gray-600">{numeroEscalas}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Horas de viaje:</h3>
-            <p className="text-gray-600">{tiempoestimado}</p>
+            <h3 className="text-gray-900 font-semibold">Clase del autobus:</h3>
+            <p className="text-gray-600">{clase}</p>
+          </div>
+          <div className="flex items-center justify-between py-2">
+            <h3 className="text-gray-900 font-semibold">Asiento seleccionado:</h3>
+            <p className="text-gray-600">{asiento}</p>
+          </div>
+          <div className="flex items-center justify-between py-2">
+            <h3 className="text-gray-900 font-semibold">Precio del boleto:</h3>
+            <p className="text-gray-600">${precio}</p>
           </div>
         </div>
       </div>
@@ -36,4 +38,4 @@ const ViajesCards = ({ marca, horallegada, escalas, tiempoestimado, onClick }) =
   );
 };
 
-export default ViajesCards;
+export default ViajesCompletadosCards;

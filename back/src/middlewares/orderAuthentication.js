@@ -16,7 +16,7 @@ const validarPermisos = async (req, res, next) => {
         END
       ) AS pagado,
       ( CASE
-          WHEN NOW() > fechaExpiracion THEN 1
+          WHEN NOW() >= fechaExpiracion THEN 1
           ELSE 0
         END
       ) AS vencido
