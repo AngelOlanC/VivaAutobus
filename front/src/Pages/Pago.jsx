@@ -135,11 +135,9 @@ const Pago = () => {
           Authorization: token
         }
       });
-      console.log("ALGO BIEN");
+      navigate('/viajar')
       alert("Pago realizado con exito!");
-      navigate('/perfil')
     } catch (error) {
-      console.log("VALIO VERGA", error)
       console.error(error);
     }
   };

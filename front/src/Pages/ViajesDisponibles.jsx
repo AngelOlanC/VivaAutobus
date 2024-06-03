@@ -30,9 +30,13 @@ const ViajesDisponibles = () => {
           Authorization: token,
         },
       });
-      const data = response.data;
-      if (Array.isArray(data.rows)) {
-        setViajes(data.rows);
+      const rows = response.data?.rows;
+      if (rows?.length === 0) {
+        alert('No hay viajes disponibles con los parametros dados. Volveras a la pagina de viajes');
+        return navigate("/viajar");
+      }
+      if (Array.isArray(rows)) {
+        setViajes(rows);
       }
     } catch (error) {
       alert("Error al obtener los viajes", error);

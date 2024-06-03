@@ -29,7 +29,8 @@ const Viajar = () => {
         setEstaciones(data.rows);
       }
     } catch (error) {
-      alert("Error al obtener las estaciones", error);
+      alert("Error al obtener las estaciones");
+      return navigate("/perfil");
     }
   };
 
@@ -61,7 +62,7 @@ const Viajar = () => {
   const submitForm = (e) => {
     e.preventDefault();
     if (!origen || !destino || !startDate) {
-      console.log("Porfavor llene todos los campos");
+      alert("Porfavor llene todos los campos");
       return;
     }
     let fecha = startDate.split("-").reduce((acc, item) => {

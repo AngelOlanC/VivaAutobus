@@ -52,19 +52,24 @@ const Registro = () => {
     }
 
     if (
-      userData.contrasena === userData.confirmarContrasena &&
-      userData.nombreUsuario !== "" &&
-      userData.nombres !== "" &&
-      userData.apellidos !== "" &&
-      userData.contrasena !== ""
+      userData.nombreUsuario === "" ||
+      userData.nombres === "" ||
+      userData.apellidos === "" ||
+      userData.contrasena === ""
     ) {
-      await createUser(createUserURI);
-      await fetchUser();
-      alert("Usuario registrado con exito");
-      navigate("/viajar");
-    } else {
       alert("Llene todos los campos");
+      return;
     }
+
+    if (userData.contrasena.length < 8) {
+      alert("La contrasena tiene que tener al menos 8 caracteres")
+      return;
+    }
+
+    await createUser(createUserURI);
+    await fetchUser();
+    alert("Usuario registrado con exito");
+    navigate("/viajar");
   };
 
   return (

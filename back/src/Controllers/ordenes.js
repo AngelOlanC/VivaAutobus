@@ -102,7 +102,7 @@ const apartarOrden = async (userId, costo, idViaje, idOrigen, idDestino, asiento
         const sqlCrearOrden =
         `
         INSERT INTO Orden(idViaje, idUsuario, paradaOrigen, paradaDestino, metodoPago, costo, fechaExpiracion) VALUES
-          (${idViaje}, ${userId}, ${idOrigen}, ${idDestino}, 'tarjeta', ${costo}, DATE_ADD(NOW(), INTERVAL 2 MINUTE));
+          (${idViaje}, ${userId}, ${idOrigen}, ${idDestino}, 'tarjeta', ${costo}, DATE_ADD(NOW(), INTERVAL 5 MINUTE));
         `;
         return connection.query(sqlCrearOrden, [], (err, res) => {
           if (err) {
@@ -256,7 +256,7 @@ const eliminarOrden = async (req, res) => {
       FROM
         Orden
       WHERE
-        id = ${id};
+        id = ${idOrden};
       ` 
     await pool.promise().execute(sqlOrden);
     return res.status(200).json({

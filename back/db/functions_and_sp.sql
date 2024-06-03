@@ -1,3 +1,5 @@
+use VivaAutobus;
+
 SET GLOBAL log_bin_trust_function_creators = 1;
 
 DELIMITER $$

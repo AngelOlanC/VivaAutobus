@@ -67,6 +67,7 @@ const ViajesCompletados = () => {
 
     const onClick = async ({ idOrden }) => {
         if (await cancelarOrden(idOrden)) {
+            alert('Orden cancelada con exito')
             window.location.reload(); 
         } else {
             console.log("XD ")
