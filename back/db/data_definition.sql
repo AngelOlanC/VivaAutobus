@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS Usuario(
     apellidos VARCHAR(30),
     CONSTRAINT usuarioUnico UNIQUE(nombreUsuario)
 );
-INSERT INTO Estado(nombre) values ('A') ; SELECT LAST_INSERT_ID();
  
 CREATE TABLE IF NOT EXISTS Estado(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +55,6 @@ CREATE TABLE IF NOT EXISTS Parada(
     INDEX i1 (idEstacion, fechaEstimadaLlegada)
 );
 
-
 CREATE TABLE IF NOT EXISTS Orden(
     id INT PRIMARY KEY AUTO_INCREMENT,
     idViaje INT,
@@ -77,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Orden(
 CREATE TABLE IF NOT EXISTS Boleto(
 	idOrden INT REFERENCES Orden(id),
 	asiento INT,
-	nombre VARCHAR(40),
+	nombres VARCHAR(40),
 	apellidos VARCHAR(40),
 	CONSTRAINT PRIMARY KEY (idOrden, asiento)
 );
