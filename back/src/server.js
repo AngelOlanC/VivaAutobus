@@ -14,6 +14,10 @@ const routerBuscar = require('./Routes/Buscar')
 const routerOrdenes = require('./Routes/Ordenar')
 const routerUsuario = require('./Routes/Usuario')
 
+app.use('/', (req, res, next) => {
+  console.log(req.url)
+  next();
+})
 app.use('/buscar', validarJWT, routerBuscar)
 app.use('/ordenes', validarJWT, routerOrdenes)
 app.use('/usuario', routerUsuario)

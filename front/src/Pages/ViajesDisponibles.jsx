@@ -112,7 +112,7 @@ const ViajesDisponibles = () => {
             idViaje={viaje.id_viaje}
             origen={viaje.estacion_origen}
             destino={viaje.estacion_destino}
-            marca={viaje.marca_autobus}
+            clase={viaje.clase_autobus}
             horallegada={viaje.hora_estimada_llegada}
             escalas={viaje.numero_escalas}
             tiempoestimado={viaje.horas_estimadas_viaje}

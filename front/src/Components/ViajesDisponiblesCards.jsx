@@ -1,4 +1,4 @@
-const ViajesDisponiblesCards = ({ idViaje, marca, horallegada, escalas, tiempoestimado, onClick, id_num_parada_origen, id_num_parada_destino }) => {
+const ViajesDisponiblesCards = ({ idViaje, clase, horallegada, escalas, tiempoestimado, onClick, id_num_parada_origen, id_num_parada_destino }) => {
   const handleClick = () => {
     onClick({ idViaje, id_num_parada_origen, id_num_parada_destino });
   };
@@ -15,8 +15,8 @@ const ViajesDisponiblesCards = ({ idViaje, marca, horallegada, escalas, tiempoes
         </div>
         <div className="p-4">
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Marca autobus:</h3>
-            <p className="text-gray-600">{marca}</p>
+            <h3 className="text-gray-900 font-semibold">Clase autobus:</h3>
+            <p className="text-gray-600">{clase}</p>
           </div>
           <div className="flex items-center justify-between py-2">
             <h3 className="text-gray-900 font-semibold">Hora de llegada:</h3>

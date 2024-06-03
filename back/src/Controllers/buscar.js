@@ -10,9 +10,9 @@ const buscarAsientos = async (req, res) => {
       Boleto B
       INNER JOIN Orden O on B.idOrden = O.id
     WHERE
-      O.IdViaje = ${idViaje} and
-      miMax(${idOrigen}, O.ParadaOrigen) <= miMin(${idDestino}, O.ParadaDestino);`;
-
+      O.IdViaje = ${idViaje} AND
+      miMax(${idOrigen}, O.ParadaOrigen) <= miMin(${idDestino}, O.ParadaDestino) AND
+      NOW() <= O.fechaExpiracion;`
   try {
     const [rows, cols] = await pool.promise().query(sqlQuery);
     const asientos = Array(24);
@@ -60,7 +60,7 @@ const buscarViajes = async (req, res) => {
     const sqlQuery = `
       SELECT
           p1.idViaje AS id_viaje,
-          A.marca AS marca_autobus,
+          A.clase AS clase_autobus,
           hour(P1.fechaEstimadaLlegada) AS hora_estimada_llegada,
           (P2.numParada - P1.numParada - 1) AS numero_escalas,
           hour(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horas_estimadas_viaje,
@@ -114,7 +114,8 @@ const buscarEstaciones = async (_req, res) => {
 const buscarNombreEstacion = async (req, res) => {
   const id = req.params.id;
   try {
-    const sqlQuery = `SELECT 
+    const sqlQuery = 
+    `SELECT 
           EN.ID AS estacion_id, 
           EN.nombre AS nombre_estacion, 
           C.nombre AS nombre_ciudad, 
@@ -123,7 +124,8 @@ const buscarNombreEstacion = async (req, res) => {
           Estacion EN 
           INNER JOIN Ciudad C on C.Id = EN.IdCiudad 
           INNER JOIN Estado E on E.id = C.IdEstado
-      WHERE EN.ID = ${id};`;
+      WHERE 
+          EN.ID = ${id};`;
     const [rows] = await pool.promise().query(sqlQuery);
     res.status(200).send({
       success: true,

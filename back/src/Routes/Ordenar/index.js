@@ -1,35 +1,30 @@
 const express = require('express')
 
-const { crearOrden, capturarOrden, apartarOrden, confirmarOrden } = require('../../Controllers/ordenes')
+const validarPermisos = require('../../middlewares/orderAuthentication')
+
+const routerApartar = require('./apartar')
+
+const { crearOrden, capturarOrden, confirmarOrden, getResumen } = require('../../Controllers/ordenes')
 
 const router = express.Router()
 
-router.post('/', async (req, res) => {
-  // const { cart } = req.body;
+router.use("/apartar", routerApartar);
+
+router.get('/:idOrden', validarPermisos, getResumen)
+
+router.post('/:idOrden', validarPermisos, async (req, res) => {
+  const { idOrden } = req.params;
   const { monto } = req.body;
-  const { jsonResponse, httpStatusCode } = await crearOrden();
+  const { jsonResponse, httpStatusCode } = await crearOrden(idOrden, monto);
   console.log(jsonResponse)
   res.status(httpStatusCode).json(jsonResponse);
 })
 
-router.post('/apartar/:idViaje/:idOrigen/:idDestino/:asiento', async (req, res) => {
-  const { userId, costo } = req.headers;
-  const { idViaje, idOrigen, idDestino, asiento } = req.params;
-  return await apartarOrden(userId, costo, idViaje, idOrigen, idDestino, asiento) 
-    .then((id_orden) => res.status(200).json({
-      sucess: 'true',
-      idOrden: id_orden
-    }))
-    .catch((msg) => res.status(500).json({
-      succes: 'false',
-      message: msg
-    }))
-})
-
-router.post('/:orderID/capturar', async (req, res) => {
+router.post('/:idOrder/capturar/:idOrden', validarPermisos, async (req, res) => {
   try {
-    const { orderID } = req.params;
-    const { jsonResponse, httpStatusCode } = await capturarOrden(orderID);
+    const { idOrder } = req.params;
+    const { jsonResponse, httpStatusCode } = await capturarOrden(idOrder);
+    console.log(httpStatusCode, jsonResponse)
     res.status(httpStatusCode).json(jsonResponse);
   } catch (error) {
     console.error("Failed to create order:", error);
@@ -37,7 +32,7 @@ router.post('/:orderID/capturar', async (req, res) => {
   }
 })
 
-router.post('/:idOrden/confirmar', confirmarOrden)
+router.post('/:idOrden/confirmar', validarPermisos, confirmarOrden)
 
 
 module.exports = router

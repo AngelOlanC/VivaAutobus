@@ -107,11 +107,11 @@ INSERT INTO Conductor (nombres, email, telefono) VALUES
 	('Joaquin Castro Sarmiento', 'genji@JGL.com', '6672607022'),
     ('Gilberto Montoya Lopez', 'gilberto@SDLG.com', '6670702269');
 
-INSERT INTO Autobus (marca) VALUES
-	('Pacifico'),
-    ('Pacifico'),
-    ('Pacifico'),
-    ('Pacifico');
+INSERT INTO Autobus (clase) VALUES
+	('Basico'),
+    ('Plus'),
+    ('Estrella'),
+    ('Basico');
     
 INSERT INTO Viaje (idConductor, idAutobus) VALUES
 	(1, 1),
