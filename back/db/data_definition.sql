@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS Autobus(
 
 CREATE TABLE IF NOT EXISTS Conductor(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50),
+    nombres VARCHAR(50),
+    apellidos VARCHAR(50),
     email VARCHAR(50),
     telefono CHAR(10)
 );

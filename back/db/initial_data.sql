@@ -1,3 +1,4 @@
+USE VivaAutobus;
 INSERT INTO Estado (nombre)
 VALUES
   ('Aguascalientes'),
@@ -103,9 +104,9 @@ VALUES
   (31, 'Estacion de Autobuses Central'),
   (32, 'Terminal del Este');
 
-INSERT INTO Conductor (nombres, email, telefono) VALUES
-	('Joaquin Castro Sarmiento', 'genji@JGL.com', '6672607022'),
-    ('Gilberto Montoya Lopez', 'gilberto@SDLG.com', '6670702269');
+INSERT INTO Conductor (nombres, apellidos, email, telefono) VALUES
+	('Joaquin', 'Castro', 'genji@JGL.com', '6672607022'),
+    ('Gilberto', 'Montoya', 'gilberto@SDLG.com', '6670702269');
 
 INSERT INTO Autobus (clase) VALUES
 	('Basico'),

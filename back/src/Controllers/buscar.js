@@ -138,7 +138,7 @@ const buscarNombreEstacion = async (req, res) => {
       .send({ success: false, message: "Error al buscar estaciones" });
   }
 };
-
+  
 const buscarViajesCompletados = async (req, res) => {
   const { idUsuario } = req.params;
 
