@@ -7,7 +7,7 @@ const ResumenCompra = ({ idViaje, marca, horallegada, escalas, tiempoestimado, o
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="bg-blue-500 p-4">
           <h2 className="text-xl text-white font-semibold text-center">
-            Detalles del Viaje
+            Resumen de su seleccion
           </h2>
         </div>
         <div className="p-4">

@@ -170,13 +170,6 @@ INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
     (1, 4, 13, 20240604050000),
 	(1, 5, 12, 20240604100000),
 	(1, 6, 20, 20240604180000);
-    
-select * from orden;
-select * from boleto;
-INSERT INTO Orden(idViaje, idUsuario, paradaOrigen, paradaDestino, metodoPago, costo, fechaExpiracion) VALUES
-	(1, 1, 3, 5, "Tarjeta", 1000, 20240808);
-INSERT INTO Boleto(idOrden, asiento, nombres, apellidos) VALUES
-	(1, 1, "Juan", "Perez");
 
 INSERT INTO Parada (idViaje, numParada, idEstacion, fechaEstimadaLlegada) VALUES
 	(2, 1, 8, 20240603080000),
