@@ -10,9 +10,9 @@ const Perfil = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loading, user)
+    console.log(loading, user);
     if (loading) {
-      return
+      return;
     }
     if (!loading && !user) {
       alert("Debes iniciar sesión para acceder a esta página");
@@ -28,7 +28,6 @@ const Perfil = () => {
     navigate("/viajesPendientes");
   };
 
-
   return (
     <>
       <div className="Cuerpo-Flex-Perfil">
@@ -37,24 +36,38 @@ const Perfil = () => {
           <div className="Cuadro-Imagen">
             <img src={imagen} alt="imagen" className="Imagen-Perfil" />
             <div className="Nombre-Usuario">
-              <label htmlFor="?1" className="Etiqueta-Nombre-Usuario"> Nombre de usuario: </label>
-              {user?.nombreUsuario}
+              <label htmlFor="?1" className="Etiqueta-Nombre-Usuario">
+                {" "}
+                Usuario: {user?.nombreUsuario}
+              </label>
               <div className="Nombre-Personal-Usuario">
-                <label htmlFor="?2" className="Etiqueta-Nombre-Personal">Nombre: </label>
+                <label htmlFor="?2" className="Etiqueta-Nombre-Personal">
+                  Nombre:{" "}
+                </label>
                 {user?.nombres}
               </div>
               <div className="Apellidos-Personal-Usuario">
-                <label htmlFor="?3" className="Etiqueta-Apellidos-Personal">Apellidos: </label>
+                <label htmlFor="?3" className="Etiqueta-Apellidos-Personal">
+                  Apellidos:{" "}
+                </label>
                 {user?.apellidos}
               </div>
             </div>
-
           </div>
         </div>
-        <div className="Cuadro-Botones-Viaje">
-          <button className="Boton-Viajes-Perfil" onClick={handleBotonViajesCompletados}>Viajes Completados</button>
-          <button className="Boton-Finalizados-Perfil" onClick={handleBotonViajesPendientes}>Viajes Pendientes</button>
-
+        <div className="flex justify-center items-center mt-2 py-4 bg-white font-semibold border rounded-lg shadow-lg sm:flex-col">
+          <button
+            className="Boton-Viajes-Perfil"
+            onClick={handleBotonViajesCompletados}
+          >
+            Viajes Completados
+          </button>
+          <button
+            className="Boton-Finalizados-Perfil"
+            onClick={handleBotonViajesPendientes}
+          >
+            Viajes Pendientes
+          </button>
         </div>
       </div>
     </>
