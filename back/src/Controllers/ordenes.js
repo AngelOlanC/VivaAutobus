@@ -35,7 +35,6 @@ const crearOrden = async (monto) => {
     intent: "CAPTURE",
     purchase_units: [
       {
-        reference_id: 2,  
         amount: {
           currency_code: "MXN",
           value: monto,
