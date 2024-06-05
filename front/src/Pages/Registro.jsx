@@ -32,7 +32,7 @@ const Registro = () => {
     }
   }
   const handleLogin = () => {
-    navigate("/perfil");
+    navigate("/login");
   };
 
   const handleChange = (e) => {
@@ -66,10 +66,19 @@ const Registro = () => {
       return;
     }
 
-    await createUser(createUserURI);
-    await fetchUser();
-    alert("Usuario registrado con exito");
-    navigate("/viajar");
+    try {
+      await createUser(createUserURI);
+      await fetchUser();
+      alert("Usuario registrado con exito");
+      navigate("/viajar");
+    } catch(e) {
+      const msg = e.response?.data?.error;
+      if (msg) {
+        alert(msg);
+        return;
+      }
+      alert('La aplicacion no esta disponible en este momento.')
+    }
   };
 
   return (
@@ -85,7 +94,7 @@ const Registro = () => {
           <h1 className="text-4xl mb-16">Crea tu cuenta</h1>
           <form className="flex flex-col space-y-2 mx-8 md:mx-96">
             <label htmlFor="username" className="text-gray-700 font-bold">
-              Username:
+              Nombre de usuario:
             </label>
             <input
               type="text"
@@ -95,7 +104,7 @@ const Registro = () => {
               onChange={handleChange}
             />
             <label htmlFor="text" className="text-gray-700 font-bold">
-              Name:
+              Nombre:
             </label>
             <input
               type="text"
@@ -105,7 +114,7 @@ const Registro = () => {
               onChange={handleChange}
             />
             <label htmlFor="text" className="text-gray-700 font-bold">
-              Last Name:
+              Apellidos:
             </label>
             <input
               type="text"
@@ -115,7 +124,7 @@ const Registro = () => {
               onChange={handleChange}
             />
             <label htmlFor="password" className="text-gray-700 font-bold">
-              Password:
+              Contraseña:
             </label>
             <input
               type="password"
@@ -126,7 +135,7 @@ const Registro = () => {
             />
 
             <label htmlFor="password" className="text-gray-700 font-bold">
-              Confirmar Password:
+              Confirmar contraseña:
             </label>
             <input
               type="password"

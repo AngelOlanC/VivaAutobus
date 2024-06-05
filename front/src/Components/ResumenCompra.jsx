@@ -17,7 +17,7 @@ const ResumenCompra = ({
         </div>
         <div className="p-4">
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Clase del autobus:</h3>
+            <h3 className="text-gray-900 font-semibold">Clase del autobus</h3>
             <p className="text-gray-600">{clase}</p>
           </div>
           <div className="flex items-center justify-between py-2">
@@ -25,7 +25,7 @@ const ResumenCompra = ({
             <p className="text-gray-600">{origen}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Hora de llegada:</h3>
+            <h3 className="text-gray-900 font-semibold">Hora de llegada</h3>
             <p className="text-gray-600">{horaLlegadaOrigen}</p>
           </div>
           <div className="flex items-center justify-between py-2">
@@ -33,7 +33,7 @@ const ResumenCompra = ({
             <p className="text-gray-600">{destino}</p>
           </div>
           <div className="flex items-center justify-between py-2">
-            <h3 className="text-gray-900 font-semibold">Horas estimadas de viaje:</h3>
+            <h3 className="text-gray-900 font-semibold">Horas estimadas de viaje</h3>
             <p className="text-gray-600">{horasEstimadasViaje}</p>
           </div>
           <div className="flex items-center justify-between py-2">

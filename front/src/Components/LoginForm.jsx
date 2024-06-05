@@ -34,12 +34,16 @@ const LoginForm = () => {
 
     try {
       const token = await checkLogin(loginURI);
-      console.log(token);
       localStorage.setItem("token", token);
       await fetchUser();
       navigate("/perfil");
     } catch (error) {
-      alert(error.response.data.error);
+      const msg = error.response?.data?.error;
+      if (msg) {
+        alert(msg);
+        return;
+      }
+      alert('La aplicacion no esta disponible en este momento.')
     }
   };
 
@@ -58,7 +62,7 @@ const LoginForm = () => {
   return (
     <form className="Formulario-Inicio-Sesion" onSubmit={handleSubmit}>
       <label htmlFor="username" className="user">
-        Username:
+        Usuario:
       </label>
       <input
         type="text"
@@ -68,7 +72,7 @@ const LoginForm = () => {
         className="Entrada-Username"
       />
       <label htmlFor="password" className="pass">
-        Password:
+        Contraseña:
       </label>
       <input
         type="password"

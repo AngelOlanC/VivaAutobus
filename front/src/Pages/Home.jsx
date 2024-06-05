@@ -1,8 +1,6 @@
 import "../Styles/Home.css";
 import LoginForm from "../Components/LoginForm";
 
-// TODO: Add jwt to local storage and check for authentication.
-
 const Home = () => {
   return (
     <div className="container mx-auto">

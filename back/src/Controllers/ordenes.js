@@ -192,9 +192,9 @@ const getResumen = async (req, res) => {
     `
     SELECT
       A.clase AS clase,
-      CONCAT(C1.nombre, ', ', E1.nombre, ', ', ED1.nombre) AS origen,
+      CONCAT(C1.nombre, ', ', ED1.nombre) AS origen,
       HOUR(P1.fechaEstimadaLlegada) AS horaLlegadaOrigen,
-      CONCAT(C2.nombre, ', ', E2.nombre, ', ', ED2.nombre) AS destino,
+      CONCAT(C2.nombre, ', ', ED2.nombre) AS destino,
       HOUR(TIMEDIFF(P2.fechaEstimadaLlegada, P1.fechaEstimadaLlegada)) AS horasEstimadasViaje,
       B.asiento AS asiento,
       CONCAT(B.nombres, ' ', B.apellidos) AS pasajero,

@@ -12,7 +12,7 @@ const Pago = () => {
   const { user, loading } = useUser();
   const [resumen, setResumen] = useState({});
   const navigate = useNavigate();
-  let precio = 100
+  let precio = 600
 
   const obtenerResumen = async () => {
     try {

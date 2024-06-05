@@ -5,16 +5,16 @@ const { generarJWT } = require('../helpers/jwt.js')
 const crearUsuario = async (req, res) => {
   const { nombreUsuario, contrasena, nombres, apellidos } = req.body
   if (!nombreUsuario) {
-    return res.status(401).send({ success: 'false', message: 'falta nombre de usuario' })
+    return res.status(401).send({ success: 'false', error: 'falta nombre de usuario' })
   }
   if (!contrasena) {
-    return res.status(401).send({ success: 'false', message: 'falta contrasena' })
+    return res.status(401).send({ success: 'false', error: 'falta contrasena' })
   }
   if (!nombres) {
-    return res.status(401).send({ success: 'false', message: 'faltan los nombres' })
+    return res.status(401).send({ success: 'false', error: 'faltan los nombres' })
   }
   if (!apellidos) {
-    return res.status(401).send({ success: 'false', message: 'faltan los apellidos' })
+    return res.status(401).send({ success: 'false', error: 'faltan los apellidos' })
   }
 
   try {
@@ -28,7 +28,7 @@ const crearUsuario = async (req, res) => {
       if (results.length > 0) {
         return res.status(400).json({
           success: 'false',
-          message: 'El username ya ha sido utilizado'
+          error: 'El username ya ha sido utilizado'
         });
       }
 
@@ -38,7 +38,7 @@ const crearUsuario = async (req, res) => {
           console.log(error);
           return res.status(500).json({
             success: 'false',
-            message: 'Server error'
+            error: 'Server error'
           });
         }
         const token = await generarJWT(results.insertId, nombreUsuario);
@@ -49,7 +49,7 @@ const crearUsuario = async (req, res) => {
     console.log(e);
     return res.status(500).json({
       success: 'false',
-      message: 'Server error'
+      error: 'Server error'
     });
   }
 }
