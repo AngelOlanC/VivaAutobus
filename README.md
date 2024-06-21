@@ -58,6 +58,7 @@ Usage
 Once the servers are running, you can access the application by navigating to http://localhost:3000 in your web browser. From there, you can register or log in, book tickets, and manage your travel plans.
 Project Structure
 
+```bash
 /vivaautobus
 │   README.md
 │   package.json
@@ -70,6 +71,8 @@ Project Structure
 │   ├───src
 │   ├───public
 │   └───package.json
+```
+
 
 Contributing
 Contributions are welcome! Please fork this repository and submit pull requests wi
