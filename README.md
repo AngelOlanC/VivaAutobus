@@ -26,9 +26,9 @@ Prerequisites
 Setup
 
     Clone the repository:
-```bash 
+ ```bash 
       git clone https://github.com/yourusername/vivaautobus.git
-```
+ ```
 Navigate to the project directory:
 ```bash
       cd vivaautobus
